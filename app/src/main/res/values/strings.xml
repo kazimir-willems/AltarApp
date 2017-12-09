@@ -1,0 +1,59 @@
+<resources>
+    <string name="app_name">SGI仏壇アプリ</string>
+
+    <string name="prompt_pass">PASS</string>
+    <string name="prompt_id">ID</string>
+    <string name="title_login">Login</string>
+    <string name="first_person_from_here">The first person from here</string>
+    <string name="title_user_info_registration">User Information Registration</string>
+    <string name="prompt_mail_address">E-mail Address</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_language">Language(English or Japanese)</string>
+    <string name="prompt_prefectures">Prefectures (or Overseas)</string>
+    <string name="prompt_age">Age</string>
+    <string name="prompt_gender">Gender</string>
+    <string name="receive_notification_via_mail">Receive notifications via E-Mail</string>
+    <string name="terms_and_conditions">Terms and Conditions</string>
+    <string name="annual_amount">¥ 1,080 / year</string>
+    <string name="monthly_amount">¥ 108 / month</string>
+    <string name="title_sign_up">Sign Up</string>
+    <string name="title_select_altar">Select Altar</string>
+    <string name="choose_altar">Please choose the type of altar altar from the following.</string>
+    <string name="btn_back">Back</string>
+    <string name="title_select_buddhist">Select Buddhist Tool</string>
+    <string name="choose_buddhist_tool">Please choose the type of Buddhist tool from the following.</string>
+    <string name="btn_goto_confirm_screen">Confirm</string>
+    <string name="btn_choose_photo">Choose a photo</string>
+    <string name="btn_take_photo">Take a photo</string>
+    <string name="title_image_correction">Information on Image Correction</string>
+    <string name="btn_apply">Apply</string>
+    <string name="btn_no_need">No Need</string>
+    <string name="btn_history">History</string>
+    <string name="btn_speed_adjustment">Speed</string>
+    <string name="btn_menu">Menu</string>
+    <string name="btn_start">Start</string>
+    <string name="btn_stop">Stop</string>
+    <string name="title_count_last_ten_days">Counts in last 10 days</string>
+    <string name="title_speed_adjustment">Speed Adjustment</string>
+    <string name="btn_slow">Slow</string>
+    <string name="btn_fast">Fast</string>
+    <string name="title_terms_of_service">Terms of Service</string>
+    <string name="title_contact_us">Contact Us</string>
+    <string name="title_about_payment">About Payment Method</string>
+    <string name="title_notation">Notation</string>
+    <string name="title_privacy_policy">Privacy Policy</string>
+    <string name="prompt_name">Name</string>
+    <string name="prompt_reenter_mail_address">E-Mail Address Re-Enter</string>
+    <string name="prompt_inquiry_content">Content of Inquiry</string>
+    <string name="btn_send">Send</string>
+
+    <array name="arr_language">
+        <item>Japanese</item>
+        <item>English</item>
+    </array>
+
+    <array name="arr_gender">
+        <item>Male</item>
+        <item>Female</item>
+    </array>
+</resources>

@@ -1,0 +1,59 @@
+<resources>
+    <string name="app_name">SGI仏壇アプリ</string>
+
+    <string name="prompt_pass">PASS</string>
+    <string name="prompt_id">ID</string>
+    <string name="title_login">ログイン</string>
+    <string name="first_person_from_here">初めての方はこちらから</string>
+    <string name="title_user_info_registration">ユーザー情報登録</string>
+    <string name="prompt_mail_address">メールアドレス</string>
+    <string name="prompt_password">パスワード</string>
+    <string name="prompt_language">言語 ( 日本語 or 英語 )</string>
+    <string name="prompt_prefectures">都道府県 (or 国外 )</string>
+    <string name="prompt_age">年齢</string>
+    <string name="prompt_gender">性別</string>
+    <string name="receive_notification_via_mail">お知らせをメールで受け取る</string>
+    <string name="terms_and_conditions">SGI 仏壇アプリ利用規約</string>
+    <string name="annual_amount">年額 1,080 円</string>
+    <string name="monthly_amount">月額 108 円</string>
+    <string name="title_sign_up">登録する</string>
+    <string name="title_select_altar">仏壇選択</string>
+    <string name="choose_altar">以下より仏壇のタイプをお選び下さい。</string>
+    <string name="btn_back">戻る</string>
+    <string name="title_select_buddhist">仏具選択</string>
+    <string name="choose_buddhist_tool">以下より仏具のタイプをお選び下さい。</string>
+    <string name="btn_goto_confirm_screen">確認画面に進む</string>
+    <string name="btn_choose_photo">写真を選ぶ</string>
+    <string name="btn_take_photo">写真を撮影する</string>
+    <string name="title_image_correction">画像補正のご案内</string>
+    <string name="btn_apply">申し込む</string>
+    <string name="btn_no_need">不要</string>
+    <string name="btn_history">履歴画面</string>
+    <string name="btn_speed_adjustment">スピード調整</string>
+    <string name="btn_menu">メニュー</string>
+    <string name="btn_start">スタート</string>
+    <string name="btn_stop">ストップ</string>
+    <string name="title_count_last_ten_days">過去 10 日間のカウント数</string>
+    <string name="title_speed_adjustment">スピード調整</string>
+    <string name="btn_slow">遅い</string>
+    <string name="btn_fast">早い </string>
+    <string name="title_terms_of_service">利用規約</string>
+    <string name="title_contact_us">お問い合わせ</string>
+    <string name="title_about_payment">支払方法変更・解約について</string>
+    <string name="title_notation">特定商取引法に基づく表記</string>
+    <string name="title_privacy_policy">個人情報保護方針</string>
+    <string name="prompt_name">お名前</string>
+    <string name="prompt_reenter_mail_address">メールアドレス再入力</string>
+    <string name="prompt_inquiry_content">お問い合せ内容</string>
+    <string name="btn_send">送信</string>
+
+    <array name="arr_language">
+        <item>Japanese</item>
+        <item>English</item>
+    </array>
+
+    <array name="arr_gender">
+        <item>男性</item>
+        <item>女性</item>
+    </array>
+</resources>
