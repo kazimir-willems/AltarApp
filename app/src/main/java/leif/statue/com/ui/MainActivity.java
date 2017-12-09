@@ -1,15 +1,21 @@
 package leif.statue.com.ui;
 
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
+import android.media.MediaPlayer;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.Toast;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,11 +26,28 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.btn_menu)
     ImageButton btnMenu;
+    @BindView(R.id.btn_start)
+    Button btnStart;
+
+    private MediaPlayer player;
+
+    private boolean bConstant = false;
+    private boolean bStart = false;
+
+    private Handler handler = new Handler();
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            playAudio();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        player = new MediaPlayer();
 
         ButterKnife.bind(this);
     }
@@ -104,5 +127,54 @@ public class MainActivity extends AppCompatActivity {
         });
 
         popup.show();//showing popup menu
+    }
+
+    @OnClick(R.id.btn_bell)
+    void onClickBell() {
+        handler.post(runnable);
+    }
+
+    @OnClick(R.id.btn_start)
+    void onClickStart() {
+        bStart = !bStart;
+        if(bStart)
+            bConstant = true;
+        else
+            bConstant = false;
+
+        if(!bStart) {
+            btnStart.setText(getResources().getString(R.string.btn_start));
+            if(player.isPlaying()) {
+                player.stop();
+
+                return;
+            }
+        } else {
+            btnStart.setText(getResources().getString(R.string.btn_stop));
+            handler.post(runnable);
+        }
+    }
+
+    private void playAudio() {
+        if(!player.isPlaying()) {
+            try {
+                player.reset();
+                AssetFileDescriptor afd = getAssets().openFd("audio_bass.wav");
+                player.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+                player.prepare();
+                player.start();
+
+                player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        if(bStart && bConstant) {
+                            handler.postDelayed(runnable, 1500);
+                        }
+                    }
+                });
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 }
