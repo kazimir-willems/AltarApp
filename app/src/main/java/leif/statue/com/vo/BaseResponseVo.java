@@ -6,5 +6,6 @@ package leif.statue.com.vo;
 
 public class BaseResponseVo {
     public int success;
-    public int error_code;
+    public int error;
+    public String error_msg;
 }

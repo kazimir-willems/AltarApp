@@ -29,4 +29,23 @@ public class BaseProxy {
 
         return responseBody;
     }
+
+    public String getPlain(String uri, String params) throws IOException {
+        Request request =  new Request.Builder()
+                .url(uri + params)
+                .get()
+                .build();
+
+        String responseBody;
+
+        CheckHandshake handshake = new CheckHandshake();
+        client = handshake.getClient();
+        Response response = client.newCall(request).execute();
+
+        if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+
+        responseBody = response.body().string();
+
+        return responseBody;
+    }
 }

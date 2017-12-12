@@ -46,6 +46,7 @@
     <string name="prompt_reenter_mail_address">E-Mail Address Re-Enter</string>
     <string name="prompt_inquiry_content">Content of Inquiry</string>
     <string name="btn_send">Send</string>
+    <string name="str_processing">Processing...</string>
 
     <array name="arr_language">
         <item>Japanese</item>

@@ -1,5 +1,7 @@
 package leif.statue.com.proxy;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -12,13 +14,11 @@ import okhttp3.RequestBody;
 public class LoginProxy extends BaseProxy {
 
     public LoginResponseVo run(String mailAddress, String password) throws IOException {
-        FormBody.Builder formBuilder = new FormBody.Builder();
-        formBuilder.add("email", mailAddress);
-        formBuilder.add("password", password);
+        String params = "user_id=" + mailAddress + "&password=" + password;
 
-        RequestBody formBody = formBuilder.build();
+        String contentString = getPlain(URLManager.getLoginURL(), params);
 
-        String contentString = postPlain(URLManager.getLoginURL(), formBody);
+        Log.v("Content String", contentString);
 
         LoginResponseVo responseVo = new Gson().fromJson(contentString, LoginResponseVo.class);
 

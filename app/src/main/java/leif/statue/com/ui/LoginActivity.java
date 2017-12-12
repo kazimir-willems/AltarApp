@@ -1,5 +1,6 @@
 package leif.statue.com.ui;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.design.widget.TextInputEditText;
@@ -12,18 +13,25 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import leif.statue.com.R;
+import leif.statue.com.event.LoginEvent;
+import leif.statue.com.task.LoginTask;
 import leif.statue.com.util.SharedPrefManager;
 import leif.statue.com.util.StringUtil;
+import leif.statue.com.vo.LoginResponseVo;
 
 public class LoginActivity extends AppCompatActivity {
 
     private Animation shake;
+    private ProgressDialog progressDialog;
 
     private String id;
     private String password;
@@ -86,6 +94,41 @@ public class LoginActivity extends AppCompatActivity {
         } else if (curLanguage.equals("ja")) {
             languageSpin.setSelection(0);
         }
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(getResources().getString(R.string.str_processing));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onLoginEvet(LoginEvent event) {
+        hideProgressDialog();
+        LoginResponseVo responseVo = event.getResponse();
+        if (responseVo != null) {
+            if(responseVo.success == 1) {
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+
+                startActivity(intent);
+                finish();
+            } else {
+
+            }
+        } else {
+
+        }
     }
 
     @OnClick(R.id.btn_signup)
@@ -104,10 +147,14 @@ public class LoginActivity extends AppCompatActivity {
         if(!mailAddressValidate()) return;
         if(!checkPassword()) return;
 
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startLogin();
+    }
 
-        startActivity(intent);
-        finish();
+    private void startLogin() {
+        progressDialog.show();
+
+        LoginTask task = new LoginTask();
+        task.execute(id, password);
     }
 
     private boolean checkID() {
@@ -142,5 +189,10 @@ public class LoginActivity extends AppCompatActivity {
         if (target.requestFocus()) {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         }
+    }
+
+    private void hideProgressDialog() {
+        if(progressDialog.isShowing())
+            progressDialog.dismiss();
     }
 }

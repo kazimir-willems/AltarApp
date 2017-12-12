@@ -46,6 +46,7 @@
     <string name="prompt_reenter_mail_address">メールアドレス再入力</string>
     <string name="prompt_inquiry_content">お問い合せ内容</string>
     <string name="btn_send">送信</string>
+    <string name="str_processing">Processing...</string>
 
     <array name="arr_language">
         <item>Japanese</item>
