@@ -10,4 +10,8 @@ public class URLManager {
     public static String getLoginURL() {
         return HTTP_SERVER + "login?";
     }
+
+    public static String getSignUpURL() {
+        return HTTP_SERVER + "signup?";
+    }
 }

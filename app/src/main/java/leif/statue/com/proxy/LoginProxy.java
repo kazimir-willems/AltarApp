@@ -18,8 +18,6 @@ public class LoginProxy extends BaseProxy {
 
         String contentString = getPlain(URLManager.getLoginURL(), params);
 
-        Log.v("Content String", contentString);
-
         LoginResponseVo responseVo = new Gson().fromJson(contentString, LoginResponseVo.class);
 
         return responseVo;
