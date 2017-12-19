@@ -140,6 +140,11 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_login)
     void onClickLogin() {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+
+        startActivity(intent);
+        finish();
+        /*
         id = edtID.getText().toString();
         password = edtPassword.getText().toString();
 
@@ -147,7 +152,7 @@ public class LoginActivity extends AppCompatActivity {
         if(!mailAddressValidate()) return;
         if(!checkPassword()) return;
 
-        startLogin();
+        startLogin();*/
     }
 
     private void startLogin() {

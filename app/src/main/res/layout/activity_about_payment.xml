@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorDarkBlue"
         android:text="@string/title_about_payment"/>
 
     <RelativeLayout

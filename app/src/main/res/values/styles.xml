@@ -8,6 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="LoginBackground" parent="AppTheme.NoActionBar">
+        <item name="android:windowBackground">@mipmap/img_login_background</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -29,7 +33,7 @@
     <style name="ButtonCircle">
         <item name="android:layout_height">36dp</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:background">@drawable/button_circle</item>
+        <item name="android:background">@drawable/button_bell</item>
     </style>
 
     <style name="TextLabel" parent="TextAppearance.AppCompat">

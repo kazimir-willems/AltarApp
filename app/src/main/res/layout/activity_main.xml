@@ -24,11 +24,12 @@
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
-            <android.support.design.widget.FloatingActionButton
+            <ImageButton
                 android:id="@+id/btn_history"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:backgroundTint="@color/colorWhite"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                style="@style/ButtonCircle"
+                android:background="@drawable/button_circle_normal"
                 android:src="@mipmap/ic_history"/>
 
             <TextView
@@ -36,6 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:textColor="@color/colorWhite"
+                android:textSize="12sp"
                 android:text="@string/btn_history"/>
 
         </LinearLayout>
@@ -48,17 +50,19 @@
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
-            <android.support.design.widget.FloatingActionButton
+            <ImageButton
                 android:id="@+id/btn_speed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:backgroundTint="@color/colorWhite"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                style="@style/ButtonCircle"
+                android:background="@drawable/button_circle_normal"
                 android:src="@mipmap/ic_speed_adjust"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:textSize="12sp"
                 android:textColor="@color/colorWhite"
                 android:text="@string/btn_speed_adjustment"/>
 
@@ -71,11 +75,12 @@
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
-            <android.support.design.widget.FloatingActionButton
-                android:layout_width="wrap_content"
+            <ImageButton
                 android:id="@+id/btn_menu"
-                android:layout_height="wrap_content"
-                app:backgroundTint="@color/colorWhite"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                style="@style/ButtonCircle"
+                android:background="@drawable/button_circle_normal"
                 android:src="@mipmap/ic_menu"/>
 
             <TextView
@@ -83,6 +88,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:textColor="@color/colorWhite"
+                android:textSize="12sp"
                 android:text="@string/btn_menu"/>
 
         </LinearLayout>
@@ -92,7 +98,7 @@
     <LinearLayout
         android:id="@+id/middle_panel"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="32dp"
         android:layout_above="@id/bottom_layout"
         android:background="@color/colorPrimaryDark"
         android:orientation="horizontal">
@@ -192,7 +198,11 @@
         android:layout_marginBottom="4dp"
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
-        android:background="@mipmap/img_preview"/>
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:scaleType="centerInside"
+        android:background="@drawable/border_background"
+        android:src="@mipmap/img_preview"/>
 
     <Button
         android:id="@+id/btn_bell"

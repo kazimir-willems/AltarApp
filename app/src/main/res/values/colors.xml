@@ -10,4 +10,5 @@
     <color name="colorDarkAzure">#788EBC</color>
     <color name="colorGrey">#76787B</color>
     <color name="colorDarkGrey">#57585A</color>
+    <color name="colorTransWhite">#FFFFFFFF</color>
 </resources>

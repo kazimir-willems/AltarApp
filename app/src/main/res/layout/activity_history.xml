@@ -14,7 +14,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorDarkBlue"
         android:textSize="24sp"
         android:textStyle="bold"
         android:text="@string/title_count_last_ten_days"/>

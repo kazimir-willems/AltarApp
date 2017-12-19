@@ -36,24 +36,26 @@ public class SignUpActivity extends AppCompatActivity {
     TextInputEditText edtMailAddress;
     @BindView(R.id.edt_password)
     TextInputEditText edtPassword;
-    @BindView(R.id.edt_language)
-    TextInputEditText edtLanguage;
-    @BindView(R.id.edt_prefectures)
-    TextInputEditText edtPrefecture;
-    @BindView(R.id.edt_age)
-    TextInputEditText edtAge;
-    @BindView(R.id.gender_spinner)
-    Spinner genderSpinner;
     @BindView(R.id.chk_receive_notification)
     CheckBox chkNotice;
     @BindView(R.id.radio_annual_plan)
     RadioButton radioAnnualPlan;
     @BindView(R.id.radio_monthly_plan)
     RadioButton radioMonthlyPlan;
+    @BindView(R.id.language_spinner)
+    Spinner languageSpinner;
+    @BindView(R.id.prefecture_spinner)
+    Spinner prefectureSpinner;
+    @BindView(R.id.age_spinner)
+    Spinner ageSpinner;
+    @BindView(R.id.radio_gender_male)
+    RadioButton radioMale;
+    @BindView(R.id.radio_gender_female)
+    RadioButton radioFemale;
 
     private String mailAddress;
     private String password;
-    private String language;
+    private String language = "ja";
     private String prefecture;
     private String age;
     private int gender = 1;
@@ -71,10 +73,29 @@ public class SignUpActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getResources().getString(R.string.str_processing));
 
-        genderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        languageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                gender = i + 1;
+                switch(i) {
+                    case 0:
+                        language = "ja";
+                        break;
+                    case 1:
+                        language = "en";
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        prefectureSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                prefecture = getResources().getStringArray(R.array.arr_prefecture)[i];
             }
 
             @Override
@@ -105,6 +126,20 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 plan = 2;
+            }
+        });
+
+        radioMale.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gender = 1;
+            }
+        });
+
+        radioFemale.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gender = 2;
             }
         });
     }
@@ -143,19 +178,18 @@ public class SignUpActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_signup)
     void onClickSignUp() {
+        Intent intent = new Intent(SignUpActivity.this, SelectAltarActivity.class);
+
+        startActivity(intent);
+        finish();
+        /*
         mailAddress = edtMailAddress.getText().toString();
         password = edtPassword.getText().toString();
-        language = edtLanguage.getText().toString();
-        prefecture = edtPrefecture.getText().toString();
-        age = edtAge.getText().toString();
 
         if(!checkMailAddress()) return;
         if(!checkPassword()) return;
-        if(!checkLanguage()) return;
-        if(!checkPrefecture()) return;
-        if(!checkAge()) return;
 
-        startSignUp();
+        startSignUp();*/
     }
 
     @OnClick(R.id.btn_terms_and_conditions)
@@ -184,33 +218,6 @@ public class SignUpActivity extends AppCompatActivity {
     private boolean checkPassword() {
         if (StringUtil.isEmpty(password)) {
             showInfoNotice(edtPassword);
-            return false;
-        }
-
-        return true;
-    }
-
-    private boolean checkLanguage() {
-        if (StringUtil.isEmpty(language)) {
-            showInfoNotice(edtLanguage);
-            return false;
-        }
-
-        return true;
-    }
-
-    private boolean checkPrefecture() {
-        if (StringUtil.isEmpty(prefecture)) {
-            showInfoNotice(edtPrefecture);
-            return false;
-        }
-
-        return true;
-    }
-
-    private boolean checkAge() {
-        if (StringUtil.isEmpty(age)) {
-            showInfoNotice(edtAge);
             return false;
         }
 

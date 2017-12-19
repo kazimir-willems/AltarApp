@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import leif.statue.com.R;
 
 public class ConfirmActivity extends AppCompatActivity {
@@ -29,8 +30,6 @@ public class ConfirmActivity extends AppCompatActivity {
         croppedUri = (Uri) getIntent().getParcelableExtra("cropped_uri");
 
         ButterKnife.bind(this);
-
-        showCorrectionDialog();
     }
 
     private void showCorrectionDialog() {
@@ -53,11 +52,26 @@ public class ConfirmActivity extends AppCompatActivity {
         resultDialogView.findViewById(R.id.btn_no_need).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(ConfirmActivity.this, MainActivity.class);
+
+                startActivity(intent);
+
                 infoDialog.dismiss();
+                finish();
             }
         });
 
         infoDialog.setCanceledOnTouchOutside(false);
         infoDialog.show();
+    }
+
+    @OnClick(R.id.btn_back)
+    void onClickFinish() {
+        finish();
+    }
+
+    @OnClick(R.id.btn_confirm)
+    void onClickConfirm() {
+        showCorrectionDialog();
     }
 }

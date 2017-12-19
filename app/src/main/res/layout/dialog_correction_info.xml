@@ -23,6 +23,9 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="登録していただいた写真の補正を承っております。108 円でトリミングと明るさ調整を行います。翌営業日中に完了いたします。再補正は 1 度まで可能です。"
+        android:textSize="18sp"
+        android:textColor="@color/colorBlack"
         android:layout_marginTop="@dimen/activity_vertical_margin"/>
 
     <Button

@@ -1,5 +1,7 @@
 package leif.statue.com.ui;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -42,6 +45,20 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    private int curSpeed = 5;
+    private int tempSpeed = 5;
+
+    private TextView btnOne;
+    private TextView btnTwo;
+    private TextView btnThree;
+    private TextView btnFour;
+    private TextView btnFive;
+    private TextView btnSix;
+    private TextView btnSeven;
+    private TextView btnEight;
+    private TextView btnNine;
+    private TextView btnTen;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,25 +82,210 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showSpeedAdjustmentDialog() {
+        tempSpeed = curSpeed;
+
         LayoutInflater factory = LayoutInflater.from(MainActivity.this);
-        final View resultDialogView = factory.inflate(R.layout.dialog_speed_adjustment, null);
+        final View speedDialogView = factory.inflate(R.layout.dialog_speed_adjustment, null);
+
+        btnOne = (TextView) speedDialogView.findViewById(R.id.tv_one);
+        btnTwo = (TextView) speedDialogView.findViewById(R.id.tv_two);
+        btnThree = (TextView) speedDialogView.findViewById(R.id.tv_three);
+        btnFour = (TextView) speedDialogView.findViewById(R.id.tv_four);
+        btnFive = (TextView) speedDialogView.findViewById(R.id.tv_five);
+        btnSix = (TextView) speedDialogView.findViewById(R.id.tv_six);
+        btnSeven = (TextView) speedDialogView.findViewById(R.id.tv_seven);
+        btnEight = (TextView) speedDialogView.findViewById(R.id.tv_eight);
+        btnNine = (TextView) speedDialogView.findViewById(R.id.tv_nine);
+        btnTen = (TextView) speedDialogView.findViewById(R.id.tv_ten);
+
+        btnOne.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                curSpeed = 1;
+                setSpeedButton();
+            }
+        });
+
+        btnTwo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                curSpeed = 2;
+                setSpeedButton();
+            }
+        });
+
+        btnThree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                curSpeed = 3;
+                setSpeedButton();
+            }
+        });
+
+        btnFour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                curSpeed = 4;
+                setSpeedButton();
+            }
+        });
+
+        btnFive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                curSpeed = 5;
+                setSpeedButton();
+            }
+        });
+
+        btnSix.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                curSpeed = 6;
+                setSpeedButton();
+            }
+        });
+
+        btnSeven.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                curSpeed = 7;
+                setSpeedButton();
+            }
+        });
+
+        btnEight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                curSpeed = 8;
+                setSpeedButton();
+            }
+        });
+
+        btnNine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                curSpeed = 9;
+                setSpeedButton();
+            }
+        });
+
+        btnTen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                curSpeed = 10;
+                setSpeedButton();
+            }
+        });
 
         final AlertDialog infoDialog = new AlertDialog.Builder(MainActivity.this).create();
-        infoDialog.setView(resultDialogView);
-        resultDialogView.findViewById(R.id.btn_slow).setOnClickListener(new View.OnClickListener() {
+        infoDialog.setView(speedDialogView);
+        speedDialogView.findViewById(R.id.btn_slow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                infoDialog.dismiss();
+                if(curSpeed == 1)
+                    return;
+                curSpeed--;
+
+                setSpeedButton();
             }
         });
-        resultDialogView.findViewById(R.id.btn_fast).setOnClickListener(new View.OnClickListener() {
+        speedDialogView.findViewById(R.id.btn_fast).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(curSpeed == 10)
+                    return;
+                curSpeed++;
+
+                setSpeedButton();
+            }
+        });
+
+        infoDialog.setButton(Dialog.BUTTON_NEGATIVE, getResources().getString(R.string.btn_cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                curSpeed = tempSpeed;
                 infoDialog.dismiss();
             }
         });
 
+        infoDialog.setButton(Dialog.BUTTON_POSITIVE, getResources().getString(R.string.btn_ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                infoDialog.dismiss();
+            }
+        });
+
+        setSpeedButton();
+
         infoDialog.show();
+    }
+
+    private void setSpeedButton() {
+        btnOne.setBackgroundColor(getResources().getColor(R.color.colorTransWhite));
+        btnTwo.setBackgroundColor(getResources().getColor(R.color.colorTransWhite));
+        btnThree.setBackgroundColor(getResources().getColor(R.color.colorTransWhite));
+        btnFour.setBackgroundColor(getResources().getColor(R.color.colorTransWhite));
+        btnFive.setBackgroundColor(getResources().getColor(R.color.colorTransWhite));
+        btnSix.setBackgroundColor(getResources().getColor(R.color.colorTransWhite));
+        btnSeven.setBackgroundColor(getResources().getColor(R.color.colorTransWhite));
+        btnEight.setBackgroundColor(getResources().getColor(R.color.colorTransWhite));
+        btnNine.setBackgroundColor(getResources().getColor(R.color.colorTransWhite));
+        btnTen.setBackgroundColor(getResources().getColor(R.color.colorTransWhite));
+
+        btnOne.setTextColor(getResources().getColor(R.color.colorBlack));
+        btnTwo.setTextColor(getResources().getColor(R.color.colorBlack));
+        btnThree.setTextColor(getResources().getColor(R.color.colorBlack));
+        btnFour.setTextColor(getResources().getColor(R.color.colorBlack));
+        btnFive.setTextColor(getResources().getColor(R.color.colorBlack));
+        btnSix.setTextColor(getResources().getColor(R.color.colorBlack));
+        btnSeven.setTextColor(getResources().getColor(R.color.colorBlack));
+        btnEight.setTextColor(getResources().getColor(R.color.colorBlack));
+        btnNine.setTextColor(getResources().getColor(R.color.colorBlack));
+        btnTen.setTextColor(getResources().getColor(R.color.colorBlack));
+
+        switch (curSpeed) {
+            case 1:
+                btnOne.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selected_speed));
+                btnOne.setTextColor(getResources().getColor(R.color.colorWhite));
+                break;
+            case 2:
+                btnTwo.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selected_speed));
+                btnTwo.setTextColor(getResources().getColor(R.color.colorWhite));
+                break;
+            case 3:
+                btnThree.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selected_speed));
+                btnThree.setTextColor(getResources().getColor(R.color.colorWhite));
+                break;
+            case 4:
+                btnFour.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selected_speed));
+                btnFour.setTextColor(getResources().getColor(R.color.colorWhite));
+                break;
+            case 5:
+                btnFive.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selected_speed));
+                btnFive.setTextColor(getResources().getColor(R.color.colorWhite));
+                break;
+            case 6:
+                btnSix.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selected_speed));
+                btnSix.setTextColor(getResources().getColor(R.color.colorWhite));
+                break;
+            case 7:
+                btnSeven.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selected_speed));
+                btnSeven.setTextColor(getResources().getColor(R.color.colorWhite));
+                break;
+            case 8:
+                btnEight.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selected_speed));
+                btnEight.setTextColor(getResources().getColor(R.color.colorWhite));
+                break;
+            case 9:
+                btnNine.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selected_speed));
+                btnNine.setTextColor(getResources().getColor(R.color.colorWhite));
+                break;
+            case 10:
+                btnTen.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selected_speed));
+                btnTen.setTextColor(getResources().getColor(R.color.colorWhite));
+                break;
+        }
     }
 
     @OnClick(R.id.btn_menu)
