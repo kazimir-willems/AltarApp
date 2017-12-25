@@ -2,6 +2,7 @@ package leif.statue.com.ui;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,8 @@ import android.widget.Spinner;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,8 +62,9 @@ public class SignUpActivity extends AppCompatActivity {
     private String prefecture;
     private String age;
     private int gender = 1;
-    private int isNotice = 0;
+    private int isNotice = 1;
     private int plan = 1;
+    private int selLanguage = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,15 +77,38 @@ public class SignUpActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getResources().getString(R.string.str_processing));
 
+        selLanguage = getIntent().getIntExtra("language", 0);
+        if(selLanguage == 0) {
+            language = "ja";
+            languageSpinner.setSelection(0);
+        } else {
+            language = "en";
+            languageSpinner.setSelection(1);
+        }
+
         languageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 switch(i) {
                     case 0:
                         language = "ja";
+
+                        Locale locale = new Locale("ja");
+                        Locale.setDefault(locale);
+                        Configuration config = new Configuration();
+                        config.locale = locale;
+                        getBaseContext().getResources().updateConfiguration(config,
+                                getBaseContext().getResources().getDisplayMetrics());
                         break;
                     case 1:
                         language = "en";
+
+                        locale = new Locale("en");
+                        Locale.setDefault(locale);
+                        config = new Configuration();
+                        config.locale = locale;
+                        getBaseContext().getResources().updateConfiguration(config,
+                                getBaseContext().getResources().getDisplayMetrics());
                         break;
                 }
             }

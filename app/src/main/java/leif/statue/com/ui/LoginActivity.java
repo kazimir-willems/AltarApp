@@ -43,6 +43,8 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.language_spinner)
     Spinner languageSpin;
 
+    private int selLanguage = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +64,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 switch(i) {
                     case 0:
+                        selLanguage = 0;
+
                         Locale locale = new Locale("ja");
                         Locale.setDefault(locale);
                         Configuration config = new Configuration();
@@ -71,6 +75,8 @@ public class LoginActivity extends AppCompatActivity {
 
                         break;
                     case 1:
+                        selLanguage = 1;
+
                         locale = new Locale("en");
                         Locale.setDefault(locale);
                         config = new Configuration();
@@ -91,8 +97,10 @@ public class LoginActivity extends AppCompatActivity {
         String curLanguage = SharedPrefManager.getInstance(this).getLanguage();
         if(curLanguage.equals("en")) {
             languageSpin.setSelection(1);
+            selLanguage = 1;
         } else if (curLanguage.equals("ja")) {
             languageSpin.setSelection(0);
+            selLanguage = 0;
         }
 
         progressDialog = new ProgressDialog(this);
@@ -134,6 +142,8 @@ public class LoginActivity extends AppCompatActivity {
     @OnClick(R.id.btn_signup)
     void onClickSignUp() {
         Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+
+        intent.putExtra("language", selLanguage);
 
         startActivity(intent);
     }

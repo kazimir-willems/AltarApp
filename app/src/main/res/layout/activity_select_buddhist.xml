@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/colorDarkBlue"
         android:text="@string/choose_buddhist_tool"
+        android:textSize="20sp"
         android:layout_marginTop="@dimen/activity_vertical_margin"/>
 
     <RelativeLayout
@@ -44,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:numColumns="2"
+            android:numColumns="1"
             android:layout_above="@id/btn_back"
             android:layout_marginBottom="@dimen/activity_vertical_margin" />
 

@@ -37,6 +37,111 @@ public class MainActivity extends AppCompatActivity {
     private boolean bConstant = false;
     private boolean bStart = false;
 
+    private boolean bSpeedShow = false;
+    private boolean bSpeedDialogShow = false;
+
+    private Handler speedHandler = new Handler();
+    private Runnable speedRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if(bSpeedDialogShow) {
+                if (!bSpeedShow) {
+                    switch (curSpeed) {
+                        case 1:
+                            btnOne.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selected_speed));
+                            btnOne.setTextColor(getResources().getColor(R.color.colorWhite));
+                            break;
+                        case 2:
+                            btnTwo.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selected_speed));
+                            btnTwo.setTextColor(getResources().getColor(R.color.colorWhite));
+                            break;
+                        case 3:
+                            btnThree.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selected_speed));
+                            btnThree.setTextColor(getResources().getColor(R.color.colorWhite));
+                            break;
+                        case 4:
+                            btnFour.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selected_speed));
+                            btnFour.setTextColor(getResources().getColor(R.color.colorWhite));
+                            break;
+                        case 5:
+                            btnFive.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selected_speed));
+                            btnFive.setTextColor(getResources().getColor(R.color.colorWhite));
+                            break;
+                        case 6:
+                            btnSix.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selected_speed));
+                            btnSix.setTextColor(getResources().getColor(R.color.colorWhite));
+                            break;
+                        case 7:
+                            btnSeven.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selected_speed));
+                            btnSeven.setTextColor(getResources().getColor(R.color.colorWhite));
+                            break;
+                        case 8:
+                            btnEight.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selected_speed));
+                            btnEight.setTextColor(getResources().getColor(R.color.colorWhite));
+                            break;
+                        case 9:
+                            btnNine.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selected_speed));
+                            btnNine.setTextColor(getResources().getColor(R.color.colorWhite));
+                            break;
+                        case 10:
+                            btnTen.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selected_speed));
+                            btnTen.setTextColor(getResources().getColor(R.color.colorWhite));
+                            break;
+                    }
+
+                    bSpeedShow = !bSpeedShow;
+                } else {
+                    switch (curSpeed) {
+                        case 1:
+                            btnOne.setBackgroundColor(getResources().getColor(R.color.colorTransWhite));
+                            btnOne.setTextColor(getResources().getColor(R.color.colorBlack));
+                            break;
+                        case 2:
+                            btnTwo.setBackgroundColor(getResources().getColor(R.color.colorTransWhite));
+                            btnTwo.setTextColor(getResources().getColor(R.color.colorBlack));
+                            break;
+                        case 3:
+                            btnThree.setBackgroundColor(getResources().getColor(R.color.colorTransWhite));
+                            btnThree.setTextColor(getResources().getColor(R.color.colorBlack));
+                            break;
+                        case 4:
+                            btnFour.setBackgroundColor(getResources().getColor(R.color.colorTransWhite));
+                            btnFour.setTextColor(getResources().getColor(R.color.colorBlack));
+                            break;
+                        case 5:
+                            btnFive.setBackgroundColor(getResources().getColor(R.color.colorTransWhite));
+                            btnFive.setTextColor(getResources().getColor(R.color.colorBlack));
+                            break;
+                        case 6:
+                            btnSix.setBackgroundColor(getResources().getColor(R.color.colorTransWhite));
+                            btnSix.setTextColor(getResources().getColor(R.color.colorBlack));
+                            break;
+                        case 7:
+                            btnSeven.setBackgroundColor(getResources().getColor(R.color.colorTransWhite));
+                            btnSeven.setTextColor(getResources().getColor(R.color.colorBlack));
+                            break;
+                        case 8:
+                            btnEight.setBackgroundColor(getResources().getColor(R.color.colorTransWhite));
+                            btnEight.setTextColor(getResources().getColor(R.color.colorBlack));
+                            break;
+                        case 9:
+                            btnNine.setBackgroundColor(getResources().getColor(R.color.colorTransWhite));
+                            btnNine.setTextColor(getResources().getColor(R.color.colorBlack));
+                            break;
+                        case 10:
+                            btnTen.setBackgroundColor(getResources().getColor(R.color.colorTransWhite));
+                            btnTen.setTextColor(getResources().getColor(R.color.colorBlack));
+                            break;
+                    }
+
+                    bSpeedShow = !bSpeedShow;
+                }
+
+                speedHandler.postDelayed(speedRunnable, 5000 / curSpeed);
+            }
+        }
+    };
+
     private Handler handler = new Handler();
     private Runnable runnable = new Runnable() {
         @Override
@@ -83,6 +188,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void showSpeedAdjustmentDialog() {
         tempSpeed = curSpeed;
+
+        bSpeedDialogShow = true;
 
         LayoutInflater factory = LayoutInflater.from(MainActivity.this);
         final View speedDialogView = factory.inflate(R.layout.dialog_speed_adjustment, null);
@@ -216,9 +323,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        infoDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                bSpeedDialogShow = false;
+            }
+        });
+
         setSpeedButton();
 
         infoDialog.show();
+        speedHandler.post(speedRunnable);
     }
 
     private void setSpeedButton() {
@@ -243,49 +358,6 @@ public class MainActivity extends AppCompatActivity {
         btnEight.setTextColor(getResources().getColor(R.color.colorBlack));
         btnNine.setTextColor(getResources().getColor(R.color.colorBlack));
         btnTen.setTextColor(getResources().getColor(R.color.colorBlack));
-
-        switch (curSpeed) {
-            case 1:
-                btnOne.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selected_speed));
-                btnOne.setTextColor(getResources().getColor(R.color.colorWhite));
-                break;
-            case 2:
-                btnTwo.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selected_speed));
-                btnTwo.setTextColor(getResources().getColor(R.color.colorWhite));
-                break;
-            case 3:
-                btnThree.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selected_speed));
-                btnThree.setTextColor(getResources().getColor(R.color.colorWhite));
-                break;
-            case 4:
-                btnFour.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selected_speed));
-                btnFour.setTextColor(getResources().getColor(R.color.colorWhite));
-                break;
-            case 5:
-                btnFive.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selected_speed));
-                btnFive.setTextColor(getResources().getColor(R.color.colorWhite));
-                break;
-            case 6:
-                btnSix.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selected_speed));
-                btnSix.setTextColor(getResources().getColor(R.color.colorWhite));
-                break;
-            case 7:
-                btnSeven.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selected_speed));
-                btnSeven.setTextColor(getResources().getColor(R.color.colorWhite));
-                break;
-            case 8:
-                btnEight.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selected_speed));
-                btnEight.setTextColor(getResources().getColor(R.color.colorWhite));
-                break;
-            case 9:
-                btnNine.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selected_speed));
-                btnNine.setTextColor(getResources().getColor(R.color.colorWhite));
-                break;
-            case 10:
-                btnTen.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_selected_speed));
-                btnTen.setTextColor(getResources().getColor(R.color.colorWhite));
-                break;
-        }
     }
 
     @OnClick(R.id.btn_menu)
@@ -338,7 +410,7 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_start)
     void onClickStart() {
-        bStart = !bStart;
+        /*bStart = !bStart;
         if(bStart)
             bConstant = true;
         else
@@ -354,29 +426,31 @@ public class MainActivity extends AppCompatActivity {
         } else {
             btnStart.setText(getResources().getString(R.string.btn_stop));
             handler.post(runnable);
-        }
+        }*/
     }
 
     private void playAudio() {
-        if(!player.isPlaying()) {
-            try {
-                player.reset();
-                AssetFileDescriptor afd = getAssets().openFd("audio_bass.wav");
-                player.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
-                player.prepare();
-                player.start();
+        if(player.isPlaying())
+            player.stop();
+//        if(!player.isPlaying()) {
+        try {
+            player.reset();
+            AssetFileDescriptor afd = getAssets().openFd("audio_bass.wav");
+            player.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+            player.prepare();
+            player.start();
 
-                player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mediaPlayer) {
-                        if(bStart && bConstant) {
-                            handler.postDelayed(runnable, 1500);
-                        }
+            player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    if(bStart && bConstant) {
+                        handler.postDelayed(runnable, 1500);
                     }
-                });
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
+                }
+            });
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
+//        }
     }
 }

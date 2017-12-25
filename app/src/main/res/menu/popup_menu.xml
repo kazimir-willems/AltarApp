@@ -2,11 +2,48 @@
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="yalantis.com.sidemenu.MainActivity">
+
     <item
-        android:id="@+id/menu_terms_of_service"
-        android:title="@string/title_terms_of_service"
+        android:id="@+id/menu_edit_profile"
+        android:title="@string/menu_edit_profile"
         android:orderInCategory="100"
         app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menu_edit_image"
+        android:title="@string/menu_edit_image"
+        android:orderInCategory="100"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menu_edit_theme"
+        android:title="@string/menu_edit_theme"
+        android:orderInCategory="100"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menu_about_app"
+        android:title="@string/menu_about_app"
+        android:orderInCategory="100">
+        <menu>
+            <item
+                android:id="@+id/menu_terms_of_service"
+                android:title="@string/title_terms_of_service"
+                android:orderInCategory="100"
+                app:showAsAction="never"/>
+            <item
+                android:id="@+id/menu_privacy_policy"
+                android:title="@string/title_privacy_policy"
+                android:orderInCategory="100"
+                app:showAsAction="never"/>
+            <item
+                android:id="@+id/menu_notation"
+                android:title="@string/title_notation"
+                android:orderInCategory="100"
+                app:showAsAction="never"/>
+        </menu>
+    </item>
+
     <item
         android:id="@+id/menu_contact_us"
         android:title="@string/title_contact_us"
@@ -15,16 +52,6 @@
     <item
         android:id="@+id/menu_about_payment"
         android:title="@string/title_about_payment"
-        android:orderInCategory="100"
-        app:showAsAction="never"/>
-    <item
-        android:id="@+id/menu_notation"
-        android:title="@string/title_notation"
-        android:orderInCategory="100"
-        app:showAsAction="never"/>
-    <item
-        android:id="@+id/menu_privacy_policy"
-        android:title="@string/title_privacy_policy"
         android:orderInCategory="100"
         app:showAsAction="never"/>
 </menu>

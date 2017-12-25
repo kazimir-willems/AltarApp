@@ -8,12 +8,13 @@
     android:paddingRight="4dp"
     android:paddingTop="4dp"
     android:paddingBottom="4dp"
+    android:gravity="center_horizontal"
     android:orientation="vertical">
 
     <ImageView
         android:id="@+id/iv_altar"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="match_parent"
         android:scaleType="fitCenter"
         android:background="@drawable/border_background"
         android:paddingBottom="4dp"
@@ -27,6 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorDarkBlue"
+        android:gravity="center_horizontal"
         android:layout_marginTop="8dp"
         android:text="Altar 1"/>
     

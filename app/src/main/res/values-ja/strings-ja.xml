@@ -16,7 +16,7 @@
     <string name="terms_and_conditions">SGI 仏壇アプリ利用規約</string>
     <string name="annual_amount">年額 1,080 円</string>
     <string name="monthly_amount">月額 108 円</string>
-    <string name="title_sign_up">初めての方はこちらから</string>
+    <string name="title_sign_up">登録</string>
     <string name="title_select_altar">仏壇選択</string>
     <string name="choose_altar">以下より仏壇のタイプをお選び下さい。</string>
     <string name="btn_back">戻る</string>
@@ -38,7 +38,7 @@
     <string name="btn_slow">遅い</string>
     <string name="btn_fast">早い </string>
     <string name="title_terms_of_service">利用規約</string>
-    <string name="title_contact_us">お問い合わせ</string>
+    <string name="title_contact_us">ご意見・ご要望・お問い合わせ</string>
     <string name="title_about_payment">支払方法変更・解約について</string>
     <string name="title_notation">特定商取引法に基づく表記</string>
     <string name="title_privacy_policy">個人情報保護方針</string>
@@ -53,6 +53,26 @@
     <string name="title_theme_change_later">仏壇・仏具は後から変更可能です。</string>
     <string name="btn_cancel">キャンセル</string>
     <string name="btn_ok">はい</string>
+    <string name="menu_edit_profile">ユーザー情報編集</string>
+    <string name="menu_edit_image">画像修正</string>
+    <string name="menu_edit_theme">仏壇編集</string>
+    <string name="menu_about_app">このアプリについて</string>
+    <string name="content_about_payment">お使いの端末により変更・解約方法が異な
+ります。解約後も残りの期間は引き続きご
+利用いただけます。\n\n\n
+<b>・iPhone、iPad、iPod touch の場合</b>\n
+定期購読内容を確認するには、こちらのリ
+ンクをタップします。または、下記の
+URL をご参照ください。
+≫ 変更・解約手順\n\n\n
+        <b>・Android の場合</b>\n
+GooglePlay ストアから定期購読を解約し
+ます。詳しくは下記の URL をご参照くだ
+さい。\n\n\n
+≫ 変更・解約手順</string>
+    <string name="btn_ring">りん</string>
+    <string name="advance_counter">カウンタを進める</string>
+    <string name="return_counter">カウンタを戻す</string>
 
     <array name="arr_language">
         <item>Japanese</item>

@@ -53,6 +53,26 @@
     <string name="title_theme_change_later">Buddhist altars and Buddhist objects can be changed later.</string>
     <string name="btn_cancel">Cancel</string>
     <string name="btn_ok">Ok</string>
+    <string name="menu_edit_profile">Edit Profile</string>
+    <string name="menu_edit_image">Image Correction</string>
+    <string name="menu_edit_theme">Theme Correction</string>
+    <string name="menu_about_app">About app</string>
+    <string name="content_about_payment">お使いの端末により変更・解約方法が異な
+ります。解約後も残りの期間は引き続きご
+利用いただけます。\n\n\n
+<b><i>・iPhone、iPad、iPod touch の場合</i></b>
+定期購読内容を確認するには、こちらのリ
+ンクをタップします。または、下記の
+URL をご参照ください。
+≫ 変更・解約手順\n\n\n
+        <b><i>・Android の場合</i></b>
+GooglePlay ストアから定期購読を解約し
+ます。詳しくは下記の URL をご参照くだ
+さい。\n\n\n
+≫ 変更・解約手順</string>
+    <string name="btn_ring">Ring</string>
+    <string name="advance_counter">Advance counters</string>
+    <string name="return_counter">Return counter</string>
 
     <array name="arr_language">
         <item>Japanese</item>

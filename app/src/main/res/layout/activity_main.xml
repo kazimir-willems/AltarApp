@@ -98,7 +98,7 @@
     <LinearLayout
         android:id="@+id/middle_panel"
         android:layout_width="match_parent"
-        android:layout_height="32dp"
+        android:layout_height="48dp"
         android:layout_above="@id/bottom_layout"
         android:background="@color/colorPrimaryDark"
         android:orientation="horizontal">
@@ -107,21 +107,38 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.3"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <ImageButton
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/colorGrey"
-                android:src="@mipmap/ic_double_back"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:textSize="12sp"
+                android:maxLines="1"
+                android:gravity="center"
+                android:text="@string/advance_counter"/>
 
-            <ImageButton
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/colorDarkGrey"
-                android:src="@mipmap/ic_back"/>
+                android:layout_weight="0.3"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/colorGrey"
+                    android:src="@mipmap/ic_double_back"/>
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/colorDarkGrey"
+                    android:src="@mipmap/ic_back"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -140,22 +157,38 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.3"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <ImageButton
-                android:layout_width="0dp"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:textSize="12sp"
+                android:maxLines="1"
+                android:gravity="center"
+                android:text="@string/return_counter"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/colorDarkGrey"
-                android:src="@mipmap/ic_forward"/>
+                android:layout_weight="0.3"
+                android:orientation="horizontal">
 
-            <ImageButton
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/colorGrey"
-                android:src="@mipmap/ic_double_forward"/>
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/colorDarkGrey"
+                    android:src="@mipmap/ic_forward"/>
 
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/colorGrey"
+                    android:src="@mipmap/ic_double_forward"/>
+
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>
@@ -176,7 +209,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:textColor="@color/colorWhite"
-            android:text="000000000 回"/>
+            android:textSize="18sp"
+            android:text="0000000 回"/>
 
         <TextView
             android:layout_width="0dp"
@@ -186,7 +220,6 @@
             android:gravity="right"
             android:text="登録日 2017.12.25"/>
 
-
     </LinearLayout>
 
     <ImageView
@@ -194,12 +227,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/top_panel"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
         android:scaleType="centerInside"
         android:background="@drawable/border_background"
         android:src="@mipmap/img_preview"/>
@@ -210,6 +237,8 @@
         android:layout_height="56dp"
         android:layout_above="@id/top_panel"
         style="@style/ButtonCircle"
+        android:text="@string/btn_ring"
+        android:textColor="@color/colorWhite"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="64dp"
         android:layout_marginRight="@dimen/activity_horizontal_margin"/>

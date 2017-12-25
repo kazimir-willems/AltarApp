@@ -43,25 +43,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="16sp"
-                android:text="お使いの端末により変更・解約方法が異な
-ります。解約後も残りの期間は引き続きご
-利用いただけます。
-
-
-・iPhone、iPad、iPod touch の場合
-定期購読内容を確認するには、こちらのリ
-ンクをタップします。または、下記の
-URL をご参照ください。
-≫ 変更・解約手順
-
-
-・Android の場合
-GooglePlay ストアから定期購読を解約し
-ます。詳しくは下記の URL をご参照くだ
-さい。
-
-
-≫ 変更・解約手順"/>
+                android:text="@string/content_about_payment"/>
 
         </ScrollView>
     </RelativeLayout>
