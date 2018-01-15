@@ -59,8 +59,8 @@ public class SignUpActivity extends AppCompatActivity {
     private String mailAddress;
     private String password;
     private String language = "ja";
-    private String prefecture;
-    private String age;
+    private int prefecture = 1;
+    private int age = 1;
     private int gender = 1;
     private int isNotice = 1;
     private int plan = 1;
@@ -122,7 +122,19 @@ public class SignUpActivity extends AppCompatActivity {
         prefectureSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                prefecture = getResources().getStringArray(R.array.arr_prefecture)[i];
+                prefecture = i + 1;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        ageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                age = i + 1;
             }
 
             @Override
@@ -205,18 +217,16 @@ public class SignUpActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_signup)
     void onClickSignUp() {
-        Intent intent = new Intent(SignUpActivity.this, SelectAltarActivity.class);
+        /*Intent intent = new Intent(SignUpActivity.this, SelectAltarActivity.class);
 
-        startActivity(intent);
-        finish();
-        /*
+        startActivity(intent);*/
         mailAddress = edtMailAddress.getText().toString();
         password = edtPassword.getText().toString();
 
         if(!checkMailAddress()) return;
         if(!checkPassword()) return;
 
-        startSignUp();*/
+        startSignUp();
     }
 
     @OnClick(R.id.btn_terms_and_conditions)
@@ -230,7 +240,7 @@ public class SignUpActivity extends AppCompatActivity {
         progressDialog.show();
 
         SignUpTask task = new SignUpTask();
-        task.execute(mailAddress, password, language, prefecture, age, String.valueOf(gender), String.valueOf(isNotice), String.valueOf(plan));
+        task.execute(mailAddress, password, language, String.valueOf(prefecture), String.valueOf(age), String.valueOf(gender), String.valueOf(isNotice), String.valueOf(plan));
     }
 
     private boolean checkMailAddress() {

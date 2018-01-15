@@ -6,6 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 
@@ -39,7 +42,7 @@ public class BuddhistAdapter extends BaseAdapter {
         return null;
     }
 
-    public void addAltarItem(BuddhistItem item) {
+    public void addBuddhistItem(BuddhistItem item) {
         buddhistItems.add(item);
     }
 
@@ -57,6 +60,7 @@ public class BuddhistAdapter extends BaseAdapter {
         }
 
         final ImageView ivBuddhist = (ImageView) convertView.findViewById(R.id.iv_buddhist);
+        final TextView tvBuddhist = (TextView) convertView.findViewById(R.id.tv_buddhist_type);
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         mParent.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -66,10 +70,13 @@ public class BuddhistAdapter extends BaseAdapter {
         int valueInPixels = (int) mParent.getResources().getDimension(R.dimen.activity_horizontal_margin);
 
         ViewGroup.LayoutParams layoutParams = ivBuddhist.getLayoutParams();
-        layoutParams.width = (width - valueInPixels * 2 - 48) / 2;
+        layoutParams.width = (width - valueInPixels * 2 - 96);
         layoutParams.height = layoutParams.width;
 
         ivBuddhist.setLayoutParams(layoutParams);
+
+        tvBuddhist.setText(buddhistItem.getButsudan());
+        ImageLoader.getInstance().displayImage(buddhistItem.getUrl(), ivBuddhist);
 
         return convertView;
     }

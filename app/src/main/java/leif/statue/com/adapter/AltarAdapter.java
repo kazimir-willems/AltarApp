@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,6 +62,7 @@ public class AltarAdapter extends BaseAdapter {
         }
 
         final ImageView ivAltar = (ImageView) convertView.findViewById(R.id.iv_altar);
+        final TextView tvTheme = (TextView) convertView.findViewById(R.id.tv_altar_type);
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         mParent.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -69,10 +72,13 @@ public class AltarAdapter extends BaseAdapter {
         int valueInPixels = (int) mParent.getResources().getDimension(R.dimen.activity_horizontal_margin);
 
         ViewGroup.LayoutParams layoutParams = ivAltar.getLayoutParams();
-        layoutParams.width = (width - valueInPixels * 2 - 48) / 2;
+        layoutParams.width = (width - valueInPixels * 2 - 96);
         layoutParams.height = layoutParams.width;
 
         ivAltar.setLayoutParams(layoutParams);
+
+        ImageLoader.getInstance().displayImage(altarItem.getUrl(), ivAltar);
+        tvTheme.setText(altarItem.getTheme());
 
         return convertView;
     }
