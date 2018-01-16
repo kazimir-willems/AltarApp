@@ -53,10 +53,16 @@
     <string name="title_theme_change_later">仏壇・仏具は後から変更可能です。</string>
     <string name="btn_cancel">キャンセル</string>
     <string name="btn_ok">はい</string>
+    <string name="btn_save">セーブ</string>
     <string name="menu_edit_profile">ユーザー情報編集</string>
     <string name="menu_edit_image">画像修正</string>
     <string name="menu_edit_theme">仏壇編集</string>
     <string name="menu_about_app">このアプリについて</string>
+    <string name="sent_content_successfully">成功的に発送されました。</string>
+    <string name="save_profile_successfully">成功的に保管されました。</string>
+    <string name="input_mail_address">メールアドレスをご入力下さい。</string>
+    <string name="input_password"> パスワードをご入力下さい。</string>
+    <string name="input_mail_password">メールアドレスとパスワードをご入力下さい。</string>
     <string name="content_about_payment">お使いの端末により変更・解約方法が異な
 ります。解約後も残りの期間は引き続きご
 利用いただけます。\n\n\n

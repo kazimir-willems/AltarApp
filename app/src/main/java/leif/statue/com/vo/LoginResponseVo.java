@@ -5,5 +5,10 @@ package leif.statue.com.vo;
  */
 
 public class LoginResponseVo extends BaseResponseVo{
-
+    public int user_id;
+    public String email;
+    public int prefecture;
+    public int age;
+    public int gender;
+    public int is_notice;
 }

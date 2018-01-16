@@ -40,7 +40,7 @@
     <string name="title_terms_of_service">Terms of Service</string>
     <string name="title_contact_us">Contact Us</string>
     <string name="title_about_payment">About Payment Method</string>
-    <string name="title_notation">Notation</string>
+    <string name="title_notation">Commercial</string>
     <string name="title_privacy_policy">Privacy Policy</string>
     <string name="prompt_name">Name</string>
     <string name="prompt_reenter_mail_address">E-Mail Address Re-Enter</string>
@@ -53,10 +53,16 @@
     <string name="title_theme_change_later">Buddhist altars and Buddhist objects can be changed later.</string>
     <string name="btn_cancel">Cancel</string>
     <string name="btn_ok">Ok</string>
+    <string name="btn_save">Save</string>
     <string name="menu_edit_profile">Edit Profile</string>
     <string name="menu_edit_image">Image Correction</string>
     <string name="menu_edit_theme">Theme Correction</string>
     <string name="menu_about_app">About app</string>
+    <string name="sent_content_successfully">Sent Successfully</string>
+    <string name="save_profile_successfully">Save Successfully</string>
+    <string name="input_mail_address">Please input Email Address.</string>
+    <string name="input_password">Please input Password.</string>
+    <string name="input_mail_password">Please input email address and password.</string>
     <string name="content_about_payment">お使いの端末により変更・解約方法が異な
 ります。解約後も残りの期間は引き続きご
 利用いただけます。\n\n\n

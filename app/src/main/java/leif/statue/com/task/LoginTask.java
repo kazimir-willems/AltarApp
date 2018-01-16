@@ -12,6 +12,8 @@ public class LoginTask extends AsyncTask<String, Void, LoginResponseVo> {
 
     private String mailAddress;
     private String password;
+    private String lang;
+    private String token;
 
     @Override
     protected void onPreExecute() {
@@ -23,8 +25,10 @@ public class LoginTask extends AsyncTask<String, Void, LoginResponseVo> {
         LoginProxy simpleProxy = new LoginProxy();
         mailAddress = params[0];
         password = params[1];
+        lang = params[2];
+        token = params[3];
         try {
-            final LoginResponseVo responseVo = simpleProxy.run(mailAddress, password);
+            final LoginResponseVo responseVo = simpleProxy.run(mailAddress, password, lang, token);
 
             return responseVo;
         } catch (Exception e) {

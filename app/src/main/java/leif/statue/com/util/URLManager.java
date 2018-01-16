@@ -5,22 +5,48 @@ package leif.statue.com.util;
  */
 
 public class URLManager {
-    private static final String HTTP_SERVER = "http://cruise2006.xsrv.jp/butsudan/api/";
-//    private static final String HTTP_SERVER = "http://192.168.5.213/butsudan/api/";
+//    private static final String HTTP_SERVER = "http://cruise2006.xsrv.jp";
+    private static final String HTTP_SERVER = "http://192.168.5.213";
+    private static final String HTTP_API_HEADER = "/butsudan/api/";
+    private static final String HTTP_FIXED_HEADER = "/butsudan/fixed/";
 
     public static String getLoginURL() {
-        return HTTP_SERVER + "login?";
+        return HTTP_SERVER + HTTP_API_HEADER + "login?";
     }
 
     public static String getSignUpURL() {
-        return HTTP_SERVER + "signup?";
+        return HTTP_SERVER + HTTP_API_HEADER + "signup?";
     }
 
     public static String getThemeListURL() {
-        return HTTP_SERVER + "themes";
+        return HTTP_SERVER + HTTP_API_HEADER + "themes";
     }
 
     public static String getBuddhistListURL() {
-        return HTTP_SERVER + "butsugu/";
+        return HTTP_SERVER + HTTP_API_HEADER + "butsugu/";
+    }
+
+    public static String getContactUsURL() {
+        return HTTP_SERVER + HTTP_API_HEADER + "question?";
+    }
+
+    public static String getEditProfileURL() {
+        return HTTP_SERVER + HTTP_API_HEADER + "profile?";
+    }
+
+    public static String getTermsURL() {
+        return HTTP_SERVER + HTTP_FIXED_HEADER + "terms/";
+    }
+
+    public static String getPrivacyURL() {
+        return HTTP_SERVER + HTTP_FIXED_HEADER + "privacy/";
+    }
+
+    public static String getCommercialURL() {
+        return HTTP_SERVER + HTTP_FIXED_HEADER + "commercial/";
+    }
+
+    public static String getAboutPaymentURL() {
+        return HTTP_SERVER + HTTP_FIXED_HEADER + "cancel/";
     }
 }

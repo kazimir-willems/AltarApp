@@ -12,8 +12,8 @@ import leif.statue.com.vo.SignUpResponseVo;
 
 public class SignUpProxy extends BaseProxy {
 
-    public SignUpResponseVo run(String mailAddress, String password, String lang, String prefecture, String age, String gender, String isNotice, String plan) throws IOException {
-        String params = "email=" + mailAddress + "&password=" + password + "&lang=" + lang + "&prefecture=" + prefecture + "&age=" + age + "&gender=" + gender + "&is_notice=" + isNotice + "&plan=" + plan;
+    public SignUpResponseVo run(String mailAddress, String password, String lang, String prefecture, String age, String gender, String isNotice, String plan, String token) throws IOException {
+        String params = "email=" + mailAddress + "&password=" + password + "&lang=" + lang + "&prefecture=" + prefecture + "&age=" + age + "&gender=" + gender + "&is_notice=" + isNotice + "&plan=" + plan + "&token=" + token;
 
         String contentString = getPlain(URLManager.getSignUpURL(), params);
 

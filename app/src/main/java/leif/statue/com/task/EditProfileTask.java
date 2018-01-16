@@ -4,14 +4,14 @@ import android.os.AsyncTask;
 
 import org.greenrobot.eventbus.EventBus;
 
-import leif.statue.com.event.LoginEvent;
+import leif.statue.com.event.EditProfileEvent;
 import leif.statue.com.event.SignUpEvent;
-import leif.statue.com.proxy.LoginProxy;
+import leif.statue.com.proxy.EditProfileProxy;
 import leif.statue.com.proxy.SignUpProxy;
-import leif.statue.com.vo.LoginResponseVo;
+import leif.statue.com.vo.EditProfileResponseVo;
 import leif.statue.com.vo.SignUpResponseVo;
 
-public class SignUpTask extends AsyncTask<String, Void, SignUpResponseVo> {
+public class EditProfileTask extends AsyncTask<String, Void, EditProfileResponseVo> {
 
     private String mailAddress;
     private String password;
@@ -20,8 +20,6 @@ public class SignUpTask extends AsyncTask<String, Void, SignUpResponseVo> {
     private String age;
     private String gender;
     private String isNotice;
-    private String plan;
-    private String token;
 
     @Override
     protected void onPreExecute() {
@@ -29,8 +27,8 @@ public class SignUpTask extends AsyncTask<String, Void, SignUpResponseVo> {
     }
 
     @Override
-    protected SignUpResponseVo doInBackground(String... params) {
-        SignUpProxy simpleProxy = new SignUpProxy();
+    protected EditProfileResponseVo doInBackground(String... params) {
+        EditProfileProxy simpleProxy = new EditProfileProxy();
         mailAddress = params[0];
         password = params[1];
         lang = params[2];
@@ -38,10 +36,8 @@ public class SignUpTask extends AsyncTask<String, Void, SignUpResponseVo> {
         age = params[4];
         gender = params[5];
         isNotice = params[6];
-        plan = params[7];
-        token = params[8];
         try {
-            final SignUpResponseVo responseVo = simpleProxy.run(mailAddress, password, lang, prefecture, age, gender, isNotice, plan, token);
+            final EditProfileResponseVo responseVo = simpleProxy.run(mailAddress, password, lang, prefecture, age, gender, isNotice);
 
             return responseVo;
         } catch (Exception e) {
@@ -51,7 +47,7 @@ public class SignUpTask extends AsyncTask<String, Void, SignUpResponseVo> {
     }
 
     @Override
-    protected void onPostExecute(SignUpResponseVo responseVo) {
-        EventBus.getDefault().post(new SignUpEvent(responseVo));
+    protected void onPostExecute(EditProfileResponseVo responseVo) {
+        EventBus.getDefault().post(new EditProfileEvent(responseVo));
     }
 }

@@ -13,8 +13,8 @@ import okhttp3.RequestBody;
 
 public class LoginProxy extends BaseProxy {
 
-    public LoginResponseVo run(String mailAddress, String password) throws IOException {
-        String params = "user_id=" + mailAddress + "&password=" + password;
+    public LoginResponseVo run(String mailAddress, String password, String lang, String token) throws IOException {
+        String params = "user_id=" + mailAddress + "&password=" + password + "&lang=" + lang + "&token=" + token;
 
         String contentString = getPlain(URLManager.getLoginURL(), params);
 

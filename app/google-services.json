@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "129766619069",
+    "firebase_url": "https://butstudan.firebaseio.com",
+    "project_id": "butstudan",
+    "storage_bucket": "butstudan.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:129766619069:android:1718e508931f8b6d",
+        "android_client_info": {
+          "package_name": "leif.statue.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "129766619069-aefq538ptcg76tvoeu1dng3cm1ooj7eb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoWDYqVq5dJ8xqK9idTljkQSCvs9wPKh4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

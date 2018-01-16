@@ -12,6 +12,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -21,6 +22,7 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import leif.statue.com.AltarApplication;
 import leif.statue.com.R;
 import leif.statue.com.event.LoginEvent;
 import leif.statue.com.task.LoginTask;
@@ -73,6 +75,8 @@ public class LoginActivity extends AppCompatActivity {
                         getBaseContext().getResources().updateConfiguration(config,
                                 getBaseContext().getResources().getDisplayMetrics());
 
+                        SharedPrefManager.getInstance(LoginActivity.this).saveLanguage("ja");
+
                         break;
                     case 1:
                         selLanguage = 1;
@@ -83,6 +87,8 @@ public class LoginActivity extends AppCompatActivity {
                         config.locale = locale;
                         getBaseContext().getResources().updateConfiguration(config,
                                 getBaseContext().getResources().getDisplayMetrics());
+
+                        SharedPrefManager.getInstance(LoginActivity.this).saveLanguage("en");
 
                         break;
                 }
@@ -127,12 +133,21 @@ public class LoginActivity extends AppCompatActivity {
         LoginResponseVo responseVo = event.getResponse();
         if (responseVo != null) {
             if(responseVo.success == 1) {
+
+                AltarApplication.userId = responseVo.user_id;
+
+                SharedPrefManager.getInstance(this).saveEmailAddress(responseVo.email);
+                SharedPrefManager.getInstance(this).saveAge(responseVo.age);
+                SharedPrefManager.getInstance(this).savePrefecture(responseVo.prefecture);
+                SharedPrefManager.getInstance(this).saveNotice(responseVo.is_notice);
+                SharedPrefManager.getInstance(this).saveGender(responseVo.gender);
+
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 
                 startActivity(intent);
                 finish();
             } else {
-
+                showErrorMessage(responseVo.error_msg);
             }
         } else {
 
@@ -164,7 +179,7 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.show();
 
         LoginTask task = new LoginTask();
-        task.execute(id, password);
+        task.execute(id, password, SharedPrefManager.getInstance(this).getLanguage(), SharedPrefManager.getInstance(this).getDeviceToken());
     }
 
     private boolean checkID() {
@@ -204,5 +219,9 @@ public class LoginActivity extends AppCompatActivity {
     private void hideProgressDialog() {
         if(progressDialog.isShowing())
             progressDialog.dismiss();
+    }
+
+    private void showErrorMessage(String message) {
+        Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
     }
 }

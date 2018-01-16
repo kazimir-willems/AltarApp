@@ -19,8 +19,8 @@
         <activity
             android:name=".ui.LoginActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            android:theme="@style/LoginBackground">
+            android:theme="@style/LoginBackground"
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -46,7 +46,20 @@
         <activity android:name=".ui.TermsActivity" />
         <activity android:name=".ui.AboutPaymentActivity" />
         <activity android:name=".ui.NotationActivity" />
-        <activity android:name=".ui.PrivacyActivity"></activity>
+        <activity android:name=".ui.PrivacyActivity" />
+
+        <service android:name=".notification.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".notification.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity android:name=".ui.EditProfileActivity"></activity>
     </application>
 
 </manifest>

@@ -4,7 +4,11 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
+import android.media.AudioFormat;
+import android.media.AudioManager;
+import android.media.AudioTrack;
 import android.media.MediaPlayer;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -18,12 +22,18 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import leif.statue.com.R;
+import leif.statue.com.util.SharedPrefManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -137,7 +147,10 @@ public class MainActivity extends AppCompatActivity {
                     bSpeedShow = !bSpeedShow;
                 }
 
-                speedHandler.postDelayed(speedRunnable, 5000 / curSpeed);
+                if(!bSpeedShow)
+                    speedHandler.postDelayed(speedRunnable, 200);
+                else
+                    speedHandler.postDelayed(speedRunnable, 200 + 160 * (10 - curSpeed));
             }
         }
     };
@@ -172,6 +185,7 @@ public class MainActivity extends AppCompatActivity {
         player = new MediaPlayer();
 
         ButterKnife.bind(this);
+
     }
 
     @OnClick(R.id.btn_history)
@@ -370,13 +384,20 @@ public class MainActivity extends AppCompatActivity {
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
                 switch(item.getItemId()) {
+                    case R.id.menu_edit_profile:
+                        Intent intent = new Intent(MainActivity.this, EditProfileActivity.class);
+
+                        startActivity(intent);
+                        break;
                     case R.id.menu_contact_us:
-                        Intent intent = new Intent(MainActivity.this, ContactUsActivity.class);
+                        intent = new Intent(MainActivity.this, ContactUsActivity.class);
 
                         startActivity(intent);
                         break;
                     case R.id.menu_terms_of_service:
                         intent = new Intent(MainActivity.this, TermsActivity.class);
+
+                        intent.putExtra("language", SharedPrefManager.getInstance(MainActivity.this).getLanguage());
 
                         startActivity(intent);
                         break;
@@ -405,7 +426,7 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_bell)
     void onClickBell() {
-        handler.post(runnable);
+        playAudio();
     }
 
     @OnClick(R.id.btn_start)
@@ -437,6 +458,7 @@ public class MainActivity extends AppCompatActivity {
             player.reset();
             AssetFileDescriptor afd = getAssets().openFd("audio_bass.wav");
             player.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+//            player.setPlaybackParams(player.getPlaybackParams().setSpeed(0.2f + 0.16f * curSpeed));
             player.prepare();
             player.start();
 
@@ -444,7 +466,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onCompletion(MediaPlayer mediaPlayer) {
                     if(bStart && bConstant) {
-                        handler.postDelayed(runnable, 1500);
+                        handler.postDelayed(runnable, 200);
                     }
                 }
             });
@@ -452,5 +474,44 @@ public class MainActivity extends AppCompatActivity {
             ex.printStackTrace();
         }
 //        }
+    }
+
+    public void playWav(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                int minBufferSize = AudioTrack.getMinBufferSize(44100, AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_16BIT);
+                int bufferSize = 4096;
+                AudioTrack at = new AudioTrack(AudioManager.STREAM_MUSIC, 80000, AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_16BIT, minBufferSize, AudioTrack.MODE_STREAM);
+
+                int i = 0;
+                byte[] s = new byte[bufferSize];
+                try {
+                    InputStream fin = getAssets().open("audio_bass.wav");
+                    DataInputStream dis = new DataInputStream(fin);
+
+                    at.play();
+                    while((i = dis.read(s, 0, bufferSize)) > -1){
+                        at.write(s, 0, i);
+
+                    }
+                    at.stop();
+                    at.release();
+                    dis.close();
+                    fin.close();
+
+                } catch (FileNotFoundException e) {
+                    // TODO
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    // TODO
+                    e.printStackTrace();
+                }
+
+                if(bStart && bConstant) {
+                    handler.postDelayed(runnable, 200);
+                }
+            }
+        });
     }
 }

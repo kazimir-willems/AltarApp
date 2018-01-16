@@ -27,13 +27,16 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import leif.statue.com.AltarApplication;
 import leif.statue.com.R;
+import leif.statue.com.event.EditProfileEvent;
 import leif.statue.com.event.SignUpEvent;
+import leif.statue.com.task.EditProfileTask;
 import leif.statue.com.task.SignUpTask;
 import leif.statue.com.util.SharedPrefManager;
 import leif.statue.com.util.StringUtil;
+import leif.statue.com.vo.EditProfileResponseVo;
 import leif.statue.com.vo.SignUpResponseVo;
 
-public class SignUpActivity extends AppCompatActivity {
+public class EditProfileActivity extends AppCompatActivity {
 
     private Animation shake;
     private ProgressDialog progressDialog;
@@ -44,10 +47,6 @@ public class SignUpActivity extends AppCompatActivity {
     TextInputEditText edtPassword;
     @BindView(R.id.chk_receive_notification)
     CheckBox chkNotice;
-    @BindView(R.id.radio_annual_plan)
-    RadioButton radioAnnualPlan;
-    @BindView(R.id.radio_monthly_plan)
-    RadioButton radioMonthlyPlan;
     @BindView(R.id.language_spinner)
     Spinner languageSpinner;
     @BindView(R.id.prefecture_spinner)
@@ -66,22 +65,49 @@ public class SignUpActivity extends AppCompatActivity {
     private int age = 1;
     private int gender = 1;
     private int isNotice = 1;
-    private int plan = 1;
     private int selLanguage = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
+        setContentView(R.layout.activity_edit_profile);
 
         ButterKnife.bind(this);
+
+        mailAddress = SharedPrefManager.getInstance(this).getEmailAddress();
+        prefecture = SharedPrefManager.getInstance(this).getPrefecture();
+        age = SharedPrefManager.getInstance(this).getAge();
+        gender = SharedPrefManager.getInstance(this).getGender();
+        isNotice = SharedPrefManager.getInstance(this).getNotice();
+
+        prefectureSpinner.setSelection(prefecture - 1);
+        ageSpinner.setSelection(age - 1);
+
+        switch(gender) {
+            case 1:
+                radioMale.setChecked(true);
+                break;
+            case 2:
+                radioFemale.setChecked(true);
+                break;
+        }
+
+        switch(isNotice) {
+            case 1:
+                chkNotice.setChecked(true);
+                break;
+            case 0:
+                chkNotice.setChecked(false);
+                break;
+        }
+
+        edtMailAddress.setText(mailAddress);
 
         shake = AnimationUtils.loadAnimation(this, R.anim.edittext_shake);
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getResources().getString(R.string.str_processing));
 
-        selLanguage = getIntent().getIntExtra("language", 0);
-        if(selLanguage == 0) {
+        if(SharedPrefManager.getInstance(this).getLanguage().equals("ja")) {
             language = "ja";
             languageSpinner.setSelection(0);
         } else {
@@ -96,23 +122,9 @@ public class SignUpActivity extends AppCompatActivity {
                     case 0:
                         language = "ja";
 
-                        Locale locale = new Locale("ja");
-                        Locale.setDefault(locale);
-                        Configuration config = new Configuration();
-                        config.locale = locale;
-                        getBaseContext().getResources().updateConfiguration(config,
-                                getBaseContext().getResources().getDisplayMetrics());
-
                         break;
                     case 1:
                         language = "en";
-
-                        locale = new Locale("en");
-                        Locale.setDefault(locale);
-                        config = new Configuration();
-                        config.locale = locale;
-                        getBaseContext().getResources().updateConfiguration(config,
-                                getBaseContext().getResources().getDisplayMetrics());
 
                         break;
                 }
@@ -159,20 +171,6 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-        radioAnnualPlan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                plan = 1;
-            }
-        });
-
-        radioMonthlyPlan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                plan = 2;
-            }
-        });
-
         radioMale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -203,9 +201,9 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     @Subscribe
-    public void onSignUpEvent(SignUpEvent event) {
+    public void onEditProfileEvent(EditProfileEvent event) {
         hideProgressDialog();
-        SignUpResponseVo responseVo = event.getResponse();
+        EditProfileResponseVo responseVo = event.getResponse();
         if (responseVo != null) {
             if(responseVo.success == 1) {
                 AltarApplication.userId = responseVo.user_id;
@@ -216,10 +214,16 @@ public class SignUpActivity extends AppCompatActivity {
                 SharedPrefManager.getInstance(this).saveNotice(responseVo.is_notice);
                 SharedPrefManager.getInstance(this).saveGender(responseVo.gender);
 
-                Intent intent = new Intent(SignUpActivity.this, SelectAltarActivity.class);
+                SharedPrefManager.getInstance(this).saveLanguage(language);
 
-                startActivity(intent);
-                finish();
+                Locale locale = new Locale(language);
+                Locale.setDefault(locale);
+                Configuration config = new Configuration();
+                config.locale = locale;
+                getBaseContext().getResources().updateConfiguration(config,
+                        getBaseContext().getResources().getDisplayMetrics());
+
+                showSuccessMessage();
             } else {
                 showErrorMessage(responseVo.error_msg);
             }
@@ -228,8 +232,8 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick(R.id.btn_signup)
-    void onClickSignUp() {
+    @OnClick(R.id.btn_save)
+    void onClickSave() {
         /*Intent intent = new Intent(SignUpActivity.this, SelectAltarActivity.class);
 
         startActivity(intent);*/
@@ -249,23 +253,14 @@ public class SignUpActivity extends AppCompatActivity {
             return;
         }
 
-        startSignUp();
+        startEditProfile();
     }
 
-    @OnClick(R.id.btn_terms_and_conditions)
-    void onClickTerms() {
-        Intent intent = new Intent(SignUpActivity.this, TermsActivity.class);
-
-        intent.putExtra("language", language);
-
-        startActivity(intent);
-    }
-
-    private void startSignUp() {
+    private void startEditProfile() {
         progressDialog.show();
 
-        SignUpTask task = new SignUpTask();
-        task.execute(mailAddress, password, language, String.valueOf(prefecture), String.valueOf(age), String.valueOf(gender), String.valueOf(isNotice), String.valueOf(plan), SharedPrefManager.getInstance(this).getDeviceToken());
+        EditProfileTask task = new EditProfileTask();
+        task.execute(mailAddress, password, language, String.valueOf(prefecture), String.valueOf(age), String.valueOf(gender), String.valueOf(isNotice), SharedPrefManager.getInstance(this).getDeviceToken());
     }
 
     private boolean checkMailAddress() {
@@ -299,6 +294,10 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void showErrorMessage(String message) {
-        Toast.makeText(SignUpActivity.this, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(EditProfileActivity.this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    private void showSuccessMessage() {
+        Toast.makeText(EditProfileActivity.this, R.string.save_profile_successfully, Toast.LENGTH_SHORT).show();
     }
 }
