@@ -210,13 +210,21 @@ public class SignUpActivity extends AppCompatActivity {
             if(responseVo.success == 1) {
                 AltarApplication.userId = responseVo.user_id;
 
+                SharedPrefManager.getInstance(this).saveLanguage(language);
                 SharedPrefManager.getInstance(this).saveEmailAddress(responseVo.email);
                 SharedPrefManager.getInstance(this).saveAge(responseVo.age);
                 SharedPrefManager.getInstance(this).savePrefecture(responseVo.prefecture);
                 SharedPrefManager.getInstance(this).saveNotice(responseVo.is_notice);
                 SharedPrefManager.getInstance(this).saveGender(responseVo.gender);
 
+                SharedPrefManager.getInstance(this).saveLogin(true);
+                SharedPrefManager.getInstance(this).saveUserId(responseVo.user_id);
+
+                SharedPrefManager.getInstance(this).savePassword(password);
+
                 Intent intent = new Intent(SignUpActivity.this, SelectAltarActivity.class);
+
+                intent.putExtra("edit_altar", false);
 
                 startActivity(intent);
                 finish();

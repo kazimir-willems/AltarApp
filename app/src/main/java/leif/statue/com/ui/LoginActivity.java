@@ -111,6 +111,14 @@ public class LoginActivity extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getResources().getString(R.string.str_processing));
+
+        if(SharedPrefManager.getInstance(this).getLogin()) {
+            AltarApplication.userId = SharedPrefManager.getInstance(this).getUserId();
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+
+            startActivity(intent);
+            finish();
+        }
     }
 
     @Override
@@ -141,6 +149,17 @@ public class LoginActivity extends AppCompatActivity {
                 SharedPrefManager.getInstance(this).savePrefecture(responseVo.prefecture);
                 SharedPrefManager.getInstance(this).saveNotice(responseVo.is_notice);
                 SharedPrefManager.getInstance(this).saveGender(responseVo.gender);
+
+                SharedPrefManager.getInstance(this).saveLogin(true);
+                SharedPrefManager.getInstance(this).saveUserId(responseVo.user_id);
+
+                SharedPrefManager.getInstance(this).saveBuddhistImage(responseVo.confirm);
+                SharedPrefManager.getInstance(this).saveHonjou(responseVo.honzon);
+                SharedPrefManager.getInstance(this).saveMusicLevel(responseVo.music);
+
+                SharedPrefManager.getInstance(this).saveCompleteHonzon(responseVo.last_img);
+
+                SharedPrefManager.getInstance(this).savePassword(password);
 
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 
@@ -173,6 +192,15 @@ public class LoginActivity extends AppCompatActivity {
         if(!checkPassword()) return;
 
         startLogin();
+    }
+
+    @OnClick(R.id.tv_forgot_password)
+    void onClickForgotPassword() {
+        Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+
+        intent.putExtra("language", selLanguage);
+
+        startActivity(intent);
     }
 
     private void startLogin() {

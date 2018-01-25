@@ -13,9 +13,10 @@ import leif.statue.com.vo.GetBuddhistResponseVo;
 
 public class GetBuddhistListProxy extends BaseProxy {
 
-    public GetBuddhistResponseVo run(String theme) throws IOException {
+    public GetBuddhistResponseVo run(String theme, String lang) throws IOException {
+        String params = "theme=" + theme + "&lang=" + lang;
 
-        String contentString = getPlain(URLManager.getBuddhistListURL() + theme, "");
+        String contentString = getPlain(URLManager.getBuddhistListURL(), params);
 
         Log.v("Content", contentString);
 

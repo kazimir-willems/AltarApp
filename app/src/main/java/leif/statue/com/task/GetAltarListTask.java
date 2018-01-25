@@ -13,6 +13,8 @@ import leif.statue.com.vo.LoginResponseVo;
 
 public class GetAltarListTask extends AsyncTask<String, Void, GetAltarResponseVo> {
 
+    private String lang;
+
     @Override
     protected void onPreExecute() {
 
@@ -20,9 +22,10 @@ public class GetAltarListTask extends AsyncTask<String, Void, GetAltarResponseVo
 
     @Override
     protected GetAltarResponseVo doInBackground(String... params) {
+        lang = params[0];
         GetAltarListProxy simpleProxy = new GetAltarListProxy();
         try {
-            final GetAltarResponseVo responseVo = simpleProxy.run();
+            final GetAltarResponseVo responseVo = simpleProxy.run(lang);
 
             return responseVo;
         } catch (Exception e) {

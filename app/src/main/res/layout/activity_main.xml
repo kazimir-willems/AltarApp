@@ -116,7 +116,7 @@
                 android:textSize="12sp"
                 android:maxLines="1"
                 android:gravity="center"
-                android:text="@string/advance_counter"/>
+                android:text="@string/return_counter"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -125,6 +125,7 @@
                 android:orientation="horizontal">
 
                 <ImageButton
+                    android:id="@+id/btn_dec_ten"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -132,6 +133,7 @@
                     android:src="@mipmap/ic_double_back"/>
 
                 <ImageButton
+                    android:id="@+id/btn_dec_one"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -166,7 +168,7 @@
                 android:textSize="12sp"
                 android:maxLines="1"
                 android:gravity="center"
-                android:text="@string/return_counter"/>
+                android:text="@string/advance_counter"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -175,6 +177,7 @@
                 android:orientation="horizontal">
 
                 <ImageButton
+                    android:id="@+id/btn_inc_one"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -182,6 +185,7 @@
                     android:src="@mipmap/ic_forward"/>
 
                 <ImageButton
+                    android:id="@+id/btn_inc_ten"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -205,14 +209,17 @@
         android:background="@color/colorPrimaryDark">
 
         <TextView
+            android:id="@+id/tv_count"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:textColor="@color/colorWhite"
-            android:textSize="18sp"
+            android:textSize="20sp"
+            android:textStyle="bold"
             android:text="0000000 回"/>
 
         <TextView
+            android:id="@+id/tv_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
@@ -222,14 +229,25 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/iv_altar"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/top_panel"
-        android:scaleType="centerInside"
-        android:background="@drawable/border_background"
-        android:src="@mipmap/img_preview"/>
+        android:layout_above="@id/top_panel">
+        <ImageView
+            android:id="@+id/iv_altar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            android:background="@drawable/border_background"
+            android:src="@mipmap/img_preview"/>
+
+        <ImageView
+            android:id="@+id/iv_honjou"
+            android:layout_width="60dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="120dp"
+            android:scaleType="centerCrop"/>
+    </RelativeLayout>
 
     <Button
         android:id="@+id/btn_bell"

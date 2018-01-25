@@ -5,8 +5,8 @@ package leif.statue.com.util;
  */
 
 public class URLManager {
-//    private static final String HTTP_SERVER = "http://cruise2006.xsrv.jp";
-    private static final String HTTP_SERVER = "http://192.168.5.213";
+    private static final String HTTP_SERVER = "http://cruise2006.xsrv.jp";
+//    private static final String HTTP_SERVER = "http://192.168.5.213";
     private static final String HTTP_API_HEADER = "/butsudan/api/";
     private static final String HTTP_FIXED_HEADER = "/butsudan/fixed/";
 
@@ -19,15 +19,15 @@ public class URLManager {
     }
 
     public static String getThemeListURL() {
-        return HTTP_SERVER + HTTP_API_HEADER + "themes";
+        return HTTP_SERVER + HTTP_API_HEADER + "themes?";
     }
 
     public static String getBuddhistListURL() {
-        return HTTP_SERVER + HTTP_API_HEADER + "butsugu/";
+        return HTTP_SERVER + HTTP_API_HEADER + "butsugu?";
     }
 
     public static String getContactUsURL() {
-        return HTTP_SERVER + HTTP_API_HEADER + "question?";
+        return HTTP_SERVER + HTTP_API_HEADER + "question";
     }
 
     public static String getEditProfileURL() {
@@ -48,5 +48,21 @@ public class URLManager {
 
     public static String getAboutPaymentURL() {
         return HTTP_SERVER + HTTP_FIXED_HEADER + "cancel/";
+    }
+
+    public static String getUploadHonjonURL() {
+        return HTTP_SERVER + HTTP_API_HEADER + "honzonupload";
+    }
+
+    public static String getForgotPasswordURL() {
+        return HTTP_SERVER + HTTP_API_HEADER + "forgot?";
+    }
+
+    public static String getThemeChangeURL() {
+        return HTTP_SERVER + HTTP_API_HEADER + "themechange?";
+    }
+
+    public static String getUploadCompleteURL() {
+        return HTTP_SERVER + HTTP_API_HEADER + "savelastimg";
     }
 }

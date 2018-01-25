@@ -27,6 +27,7 @@ import leif.statue.com.event.GetAltarListEvent;
 import leif.statue.com.event.LoginEvent;
 import leif.statue.com.model.AltarItem;
 import leif.statue.com.task.GetAltarListTask;
+import leif.statue.com.util.SharedPrefManager;
 import leif.statue.com.vo.GetAltarResponseVo;
 import leif.statue.com.vo.LoginResponseVo;
 
@@ -39,6 +40,8 @@ public class SelectAltarActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
+    private boolean bEditFlag = false;
+
     @BindView(R.id.altar_list)
     GridView altarList;
 
@@ -48,6 +51,8 @@ public class SelectAltarActivity extends AppCompatActivity {
         setContentView(R.layout.activity_select_altar);
 
         ButterKnife.bind(this);
+
+        bEditFlag = getIntent().getBooleanExtra("edit_altar", false);
 
         adapter = new AltarAdapter(SelectAltarActivity.this);
         altarList.setAdapter(adapter);
@@ -61,6 +66,7 @@ public class SelectAltarActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(SelectAltarActivity.this, SelectBuddhistActivity.class);
 
+                intent.putExtra("edit_altar", bEditFlag);
                 intent.putExtra("altar", item);
 
                 startActivity(intent);
@@ -90,6 +96,7 @@ public class SelectAltarActivity extends AppCompatActivity {
                         item.setId(jsonAltarItem.getInt("id"));
                         item.setUrl(jsonAltarItem.getString("url"));
                         item.setTheme(jsonAltarItem.getString("theme"));
+                        item.setUid(jsonAltarItem.getString("theme_uid"));
 
                         altarItems.add(item);
                         adapter.addAltarItem(item);
@@ -130,7 +137,7 @@ public class SelectAltarActivity extends AppCompatActivity {
         progressDialog.show();
 
         GetAltarListTask task = new GetAltarListTask();
-        task.execute();
+        task.execute(SharedPrefManager.getInstance(this).getLanguage());
     }
 
     private void hideProgressDialog() {

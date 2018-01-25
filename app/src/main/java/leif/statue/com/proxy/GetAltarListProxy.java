@@ -15,9 +15,10 @@ import leif.statue.com.vo.LoginResponseVo;
 
 public class GetAltarListProxy extends BaseProxy {
 
-    public GetAltarResponseVo run() throws IOException {
+    public GetAltarResponseVo run(String lang) throws IOException {
+        String params = "lang=" + lang;
 
-        String contentString = getPlain(URLManager.getThemeListURL(), "");
+        String contentString = getPlain(URLManager.getThemeListURL(), params);
 
         Log.v("Content", contentString);
 

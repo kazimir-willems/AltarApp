@@ -10,6 +10,7 @@ public class AltarItem implements Serializable{
     private int id;
     private String url;
     private String theme;
+    private String uid;
 
     public void setId(int value) {
         this.id = value;
@@ -33,5 +34,13 @@ public class AltarItem implements Serializable{
 
     public String getTheme() {
         return theme;
+    }
+
+    public void setUid(String value) {
+        this.uid = value;
+    }
+
+    public String getUid() {
+        return uid;
     }
 }

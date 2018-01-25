@@ -1,29 +1,31 @@
 package leif.statue.com.model;
 
+import leif.statue.com.util.StringUtil;
+
 /**
  * Created by Leif on 12/6/2017.
  */
 
 public class CountsItem {
-    private int beforeDays;
+    private String date;
     private int counts;
 
     public CountsItem() {
-        beforeDays = 0;
+        date = "";
         counts = 0;
     }
 
-    public CountsItem(int arg0, int arg1) {
-        this.beforeDays = arg0;
+    public CountsItem(String arg0, int arg1) {
+        this.date = arg0;
         this.counts = arg1;
     }
 
-    public void setBeforeDays(int value) {
-        this.beforeDays = value;
+    public void setDate(String value) {
+        this.date = value;
     }
 
-    public int getBeforeDays() {
-        return beforeDays;
+    public String getDate() {
+        return date;
     }
 
     public void setCounts(int value) {

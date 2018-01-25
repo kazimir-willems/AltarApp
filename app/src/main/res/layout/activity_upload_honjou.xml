@@ -17,7 +17,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/ButtonAzure"
-        android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:visibility="gone"
         android:text="@string/btn_choose_photo"/>
@@ -27,8 +26,38 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/ButtonAzure"
-        android:layout_alignParentBottom="true"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:text="@string/btn_take_photo"/>
+
+    <Button
+        android:id="@+id/btn_upload_own"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/ButtonAzure"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:text="@string/btn_upload_own"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/btn_upload_admin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/ButtonAzure"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:text="@string/btn_upload_admin"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/btn_back"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/ButtonAzure"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:text="@string/btn_back"/>
+
+    <ImageView
+        android:id="@+id/iv_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

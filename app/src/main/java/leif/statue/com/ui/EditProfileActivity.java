@@ -60,6 +60,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private String mailAddress;
     private String password;
+    private String oldPassword;
     private String language = "ja";
     private int prefecture = 1;
     private int age = 1;
@@ -79,6 +80,9 @@ public class EditProfileActivity extends AppCompatActivity {
         age = SharedPrefManager.getInstance(this).getAge();
         gender = SharedPrefManager.getInstance(this).getGender();
         isNotice = SharedPrefManager.getInstance(this).getNotice();
+
+        oldPassword = SharedPrefManager.getInstance(this).getPassword();
+        edtPassword.setText(oldPassword);
 
         prefectureSpinner.setSelection(prefecture - 1);
         ageSpinner.setSelection(age - 1);
@@ -215,6 +219,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 SharedPrefManager.getInstance(this).saveGender(responseVo.gender);
 
                 SharedPrefManager.getInstance(this).saveLanguage(language);
+                SharedPrefManager.getInstance(this).saveUserId(responseVo.user_id);
 
                 Locale locale = new Locale(language);
                 Locale.setDefault(locale);
@@ -230,6 +235,11 @@ public class EditProfileActivity extends AppCompatActivity {
         } else {
 
         }
+    }
+
+    @OnClick(R.id.btn_back)
+    void onClickBack() {
+        finish();
     }
 
     @OnClick(R.id.btn_save)

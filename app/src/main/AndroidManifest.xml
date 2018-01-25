@@ -59,7 +59,8 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".ui.EditProfileActivity"></activity>
+        <activity android:name=".ui.EditProfileActivity" />
+        <activity android:name=".ui.ForgotPasswordActivity"></activity>
     </application>
 
 </manifest>

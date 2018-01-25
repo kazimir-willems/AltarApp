@@ -54,15 +54,20 @@
     <string name="btn_cancel">Cancel</string>
     <string name="btn_ok">Ok</string>
     <string name="btn_save">Save</string>
+    <string name="btn_forgot_password">Forgot Password</string>
+    <string name="btn_upload_own">Upload by yourself</string>
+    <string name="btn_upload_admin">Request a Image correction</string>
     <string name="menu_edit_profile">Edit Profile</string>
     <string name="menu_edit_image">Image Correction</string>
     <string name="menu_edit_theme">Theme Correction</string>
     <string name="menu_about_app">About app</string>
+    <string name="menu_logout">Logout</string>
     <string name="sent_content_successfully">Sent Successfully</string>
     <string name="save_profile_successfully">Save Successfully</string>
     <string name="input_mail_address">Please input Email Address.</string>
     <string name="input_password">Please input Password.</string>
     <string name="input_mail_password">Please input email address and password.</string>
+    <string name="count_format">%07ds</string>
     <string name="content_about_payment">お使いの端末により変更・解約方法が異な
 ります。解約後も残りの期間は引き続きご
 利用いただけます。\n\n\n

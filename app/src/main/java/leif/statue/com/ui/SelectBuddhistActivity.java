@@ -28,6 +28,7 @@ import leif.statue.com.event.GetBuddhistListEvent;
 import leif.statue.com.model.AltarItem;
 import leif.statue.com.model.BuddhistItem;
 import leif.statue.com.task.GetBuddhistListTask;
+import leif.statue.com.util.SharedPrefManager;
 import leif.statue.com.vo.GetAltarResponseVo;
 import leif.statue.com.vo.GetBuddhistResponseVo;
 
@@ -44,12 +45,16 @@ public class SelectBuddhistActivity extends AppCompatActivity {
 
     private ArrayList<BuddhistItem> buddhistItems = new ArrayList<>();
 
+    private boolean bEditFlag = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_buddhist);
 
         ButterKnife.bind(this);
+
+        bEditFlag = getIntent().getBooleanExtra("edit_altar", false);
 
         altarItem = (AltarItem) getIntent().getSerializableExtra("altar");
 
@@ -66,6 +71,8 @@ public class SelectBuddhistActivity extends AppCompatActivity {
                 Intent intent = new Intent(SelectBuddhistActivity.this, PreviewActivity.class);
 
                 intent.putExtra("buddhist", item);
+                intent.putExtra("edit_altar", bEditFlag);
+                SharedPrefManager.getInstance(SelectBuddhistActivity.this).saveBuddhistId(item.getId());
 
                 startActivity(intent);
             }
@@ -135,7 +142,7 @@ public class SelectBuddhistActivity extends AppCompatActivity {
         progressDialog.show();
 
         GetBuddhistListTask task = new GetBuddhistListTask();
-        task.execute(altarItem.getTheme());
+        task.execute(altarItem.getUid(), SharedPrefManager.getInstance(this).getLanguage());
     }
 
     private void hideProgressDialog() {

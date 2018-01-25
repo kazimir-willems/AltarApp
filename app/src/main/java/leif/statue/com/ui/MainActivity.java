@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
@@ -13,14 +15,21 @@ import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.DataInputStream;
 import java.io.File;
@@ -28,11 +37,15 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.logging.SocketHandler;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import leif.statue.com.R;
+import leif.statue.com.db.HistoryDB;
+import leif.statue.com.model.CountsItem;
+import leif.statue.com.util.DateUtil;
 import leif.statue.com.util.SharedPrefManager;
 
 public class MainActivity extends AppCompatActivity {
@@ -41,8 +54,22 @@ public class MainActivity extends AppCompatActivity {
     ImageButton btnMenu;
     @BindView(R.id.btn_start)
     Button btnStart;
+    @BindView(R.id.tv_count)
+    TextView tvCount;
+    @BindView(R.id.tv_date)
+    TextView tvDate;
+    @BindView(R.id.iv_altar)
+    ImageView ivAltar;
+    @BindView(R.id.iv_honjou)
+    ImageView ivHonjou;
+
+    private static final String IMAGEVIEW_TAG = "icon bitmap";
+
+    int windowwidth;
+    int windowheight;
 
     private MediaPlayer player;
+    private String curDate;
 
     private boolean bConstant = false;
     private boolean bStart = false;
@@ -155,11 +182,21 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    private int count;
+
     private Handler handler = new Handler();
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
             playAudio();
+        }
+    };
+
+    private Handler countHandler = new Handler();
+    private Runnable countRunnable = new Runnable() {
+        @Override
+        public void run() {
+            increaseCount();
         }
     };
 
@@ -177,6 +214,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView btnNine;
     private TextView btnTen;
 
+    private HistoryDB historyDB;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -186,6 +225,41 @@ public class MainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        curSpeed = SharedPrefManager.getInstance(this).getSpeed();
+
+        historyDB = new HistoryDB(this);
+        curDate = DateUtil.getCurDate();
+        count = historyDB.fetchItemByDate(curDate).get(0).getCounts();
+
+        String formatted = String.format(getResources().getString(R.string.count_format), count);
+
+        tvDate.setText(DateUtil.getCurDate());
+        tvCount.setText(formatted);
+
+//        ImageLoader.getInstance().displayImage(SharedPrefManager.getInstance(this).getBuddhistImage(), ivAltar);
+        Bitmap bitmap = StringToBitMap(SharedPrefManager.getInstance(this).getCompleteHonzon());
+
+        ivAltar.setImageBitmap(bitmap);
+    }
+
+    @OnClick(R.id.btn_inc_one)
+    void onClickIncOne() {
+        incOne();
+    }
+
+    @OnClick(R.id.btn_dec_one)
+    void onClickDecOne() {
+        decOne();
+    }
+
+    @OnClick(R.id.btn_inc_ten)
+    void onClickIncTen() {
+        incTen();
+    }
+
+    @OnClick(R.id.btn_dec_ten)
+    void onClickDecTen() {
+        decTen();
     }
 
     @OnClick(R.id.btn_history)
@@ -223,6 +297,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 curSpeed = 1;
+                SharedPrefManager.getInstance(MainActivity.this).saveSpeed(curSpeed);
                 setSpeedButton();
             }
         });
@@ -231,6 +306,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 curSpeed = 2;
+                SharedPrefManager.getInstance(MainActivity.this).saveSpeed(curSpeed);
                 setSpeedButton();
             }
         });
@@ -239,6 +315,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 curSpeed = 3;
+                SharedPrefManager.getInstance(MainActivity.this).saveSpeed(curSpeed);
                 setSpeedButton();
             }
         });
@@ -247,6 +324,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 curSpeed = 4;
+                SharedPrefManager.getInstance(MainActivity.this).saveSpeed(curSpeed);
                 setSpeedButton();
             }
         });
@@ -255,6 +333,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 curSpeed = 5;
+                SharedPrefManager.getInstance(MainActivity.this).saveSpeed(curSpeed);
                 setSpeedButton();
             }
         });
@@ -263,6 +342,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 curSpeed = 6;
+                SharedPrefManager.getInstance(MainActivity.this).saveSpeed(curSpeed);
                 setSpeedButton();
             }
         });
@@ -271,6 +351,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 curSpeed = 7;
+                SharedPrefManager.getInstance(MainActivity.this).saveSpeed(curSpeed);
                 setSpeedButton();
             }
         });
@@ -279,6 +360,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 curSpeed = 8;
+                SharedPrefManager.getInstance(MainActivity.this).saveSpeed(curSpeed);
                 setSpeedButton();
             }
         });
@@ -287,6 +369,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 curSpeed = 9;
+                SharedPrefManager.getInstance(MainActivity.this).saveSpeed(curSpeed);
                 setSpeedButton();
             }
         });
@@ -295,6 +378,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 curSpeed = 10;
+                SharedPrefManager.getInstance(MainActivity.this).saveSpeed(curSpeed);
                 setSpeedButton();
             }
         });
@@ -389,6 +473,21 @@ public class MainActivity extends AppCompatActivity {
 
                         startActivity(intent);
                         break;
+                    case R.id.menu_edit_image:
+                        intent = new Intent(MainActivity.this, UploadHonjouActivity.class);
+
+                        intent.putExtra("butsugu", SharedPrefManager.getInstance(MainActivity.this).getBuddhistId());
+
+                        startActivity(intent);
+                        break;
+                    case R.id.menu_edit_theme:
+                        intent = new Intent(MainActivity.this, SelectAltarActivity.class);
+
+                        intent.putExtra("edit_altar", true);
+
+                        startActivity(intent);
+
+                        break;
                     case R.id.menu_contact_us:
                         intent = new Intent(MainActivity.this, ContactUsActivity.class);
 
@@ -416,6 +515,15 @@ public class MainActivity extends AppCompatActivity {
 
                         startActivity(intent);
                         break;
+                    case R.id.menu_logout:
+                        SharedPrefManager.getInstance(MainActivity.this).saveLogin(false);
+                        intent = new Intent(MainActivity.this, LoginActivity.class);
+
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                        startActivity(intent);
+                        finish();
+                        break;
                 }
                 return true;
             }
@@ -431,7 +539,7 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_start)
     void onClickStart() {
-        /*bStart = !bStart;
+        bStart = !bStart;
         if(bStart)
             bConstant = true;
         else
@@ -439,79 +547,106 @@ public class MainActivity extends AppCompatActivity {
 
         if(!bStart) {
             btnStart.setText(getResources().getString(R.string.btn_start));
-            if(player.isPlaying()) {
-                player.stop();
-
-                return;
-            }
         } else {
             btnStart.setText(getResources().getString(R.string.btn_stop));
-            handler.post(runnable);
-        }*/
+            countHandler.postDelayed(countRunnable, 200 + 160 * (10 - curSpeed) + 200);
+        }
     }
 
     private void playAudio() {
+        String audioFileName = "low_sound.wav";
+        if(SharedPrefManager.getInstance(this).getMusicLevel() == 1) {
+            audioFileName = "low_sound.wav";
+        } else {
+            audioFileName = "high_sound.wav";
+        }
         if(player.isPlaying())
             player.stop();
-//        if(!player.isPlaying()) {
         try {
             player.reset();
-            AssetFileDescriptor afd = getAssets().openFd("audio_bass.wav");
+            AssetFileDescriptor afd = getAssets().openFd(audioFileName);
             player.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
-//            player.setPlaybackParams(player.getPlaybackParams().setSpeed(0.2f + 0.16f * curSpeed));
             player.prepare();
             player.start();
 
-            player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mediaPlayer) {
-                    if(bStart && bConstant) {
-                        handler.postDelayed(runnable, 200);
-                    }
-                }
-            });
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-//        }
     }
 
-    public void playWav(){
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                int minBufferSize = AudioTrack.getMinBufferSize(44100, AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_16BIT);
-                int bufferSize = 4096;
-                AudioTrack at = new AudioTrack(AudioManager.STREAM_MUSIC, 80000, AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_16BIT, minBufferSize, AudioTrack.MODE_STREAM);
+    private void increaseCount() {
+        if(bStart && bConstant) {
+            count++;
+            countHandler.postDelayed(countRunnable, 200 + 160 * (10 - curSpeed) + 200);
 
-                int i = 0;
-                byte[] s = new byte[bufferSize];
-                try {
-                    InputStream fin = getAssets().open("audio_bass.wav");
-                    DataInputStream dis = new DataInputStream(fin);
+            CountsItem item = new CountsItem(curDate, count);
+            historyDB.updateItem(item);
 
-                    at.play();
-                    while((i = dis.read(s, 0, bufferSize)) > -1){
-                        at.write(s, 0, i);
+            String formatted = String.format(getResources().getString(R.string.count_format), count);
 
-                    }
-                    at.stop();
-                    at.release();
-                    dis.close();
-                    fin.close();
+            tvCount.setText(formatted);
+        }
+    }
 
-                } catch (FileNotFoundException e) {
-                    // TODO
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    // TODO
-                    e.printStackTrace();
-                }
+    private void incOne() {
+        count++;
+        if(count >= 9999999)
+            count = 9999999;
 
-                if(bStart && bConstant) {
-                    handler.postDelayed(runnable, 200);
-                }
-            }
-        });
+        CountsItem item = new CountsItem(curDate, count);
+        historyDB.updateItem(item);
+
+        String formatted = String.format(getResources().getString(R.string.count_format), count);
+
+        tvCount.setText(formatted);
+    }
+
+    private void decOne() {
+        count--;
+        if(count <= 0)
+            count = 0;
+
+        CountsItem item = new CountsItem(curDate, count);
+        historyDB.updateItem(item);
+
+        String formatted = String.format(getResources().getString(R.string.count_format), count);
+
+        tvCount.setText(formatted);
+    }
+
+    private void incTen(){
+        count = count + 10;
+        if(count >= 9999999)
+            count = 9999999;
+
+        CountsItem item = new CountsItem(curDate, count);
+        historyDB.updateItem(item);
+
+        String formatted = String.format(getResources().getString(R.string.count_format), count);
+
+        tvCount.setText(formatted);
+    }
+
+    private void decTen() {
+        count = count - 10;
+        if(count <= 0)
+            count = 0;
+        CountsItem item = new CountsItem(curDate, count);
+        historyDB.updateItem(item);
+
+        String formatted = String.format(getResources().getString(R.string.count_format), count);
+
+        tvCount.setText(formatted);
+    }
+
+    public Bitmap StringToBitMap(String encodedString){
+        try{
+            byte [] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        }catch(Exception e){
+            e.getMessage();
+            return null;
+        }
     }
 }

@@ -14,6 +14,7 @@ import leif.statue.com.vo.GetBuddhistResponseVo;
 public class GetBuddhistListTask extends AsyncTask<String, Void, GetBuddhistResponseVo> {
 
     private String theme = "";
+    private String lang = "";
 
     @Override
     protected void onPreExecute() {
@@ -23,10 +24,11 @@ public class GetBuddhistListTask extends AsyncTask<String, Void, GetBuddhistResp
     @Override
     protected GetBuddhistResponseVo doInBackground(String... params) {
         theme = params[0];
+        lang = params[1];
 
         GetBuddhistListProxy simpleProxy = new GetBuddhistListProxy();
         try {
-            final GetBuddhistResponseVo responseVo = simpleProxy.run(theme);
+            final GetBuddhistResponseVo responseVo = simpleProxy.run(theme, lang);
 
             return responseVo;
         } catch (Exception e) {
