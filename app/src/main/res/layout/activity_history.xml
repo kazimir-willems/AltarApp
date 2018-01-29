@@ -32,11 +32,20 @@
             android:layout_alignParentBottom="true"
             android:text="@string/btn_back"/>
 
+        <Button
+            android:id="@+id/btn_send"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/ButtonAzure"
+            android:layout_above="@id/btn_back"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:text="@string/btn_save"/>
+
         <ListView
             android:id="@+id/history_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/btn_back"
+            android:layout_above="@id/btn_send"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
             tools:listitem="@layout/adapter_history"></ListView>
 

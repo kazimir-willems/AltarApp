@@ -16,6 +16,9 @@ import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Locale;
 
@@ -24,8 +27,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import leif.statue.com.AltarApplication;
 import leif.statue.com.R;
+import leif.statue.com.db.HistoryDB;
 import leif.statue.com.event.LoginEvent;
+import leif.statue.com.model.CountsItem;
 import leif.statue.com.task.LoginTask;
+import leif.statue.com.util.DateUtil;
 import leif.statue.com.util.SharedPrefManager;
 import leif.statue.com.util.StringUtil;
 import leif.statue.com.vo.LoginResponseVo;
@@ -101,16 +107,17 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         String curLanguage = SharedPrefManager.getInstance(this).getLanguage();
-        if(curLanguage.equals("en")) {
-            languageSpin.setSelection(1);
-            selLanguage = 1;
-        } else if (curLanguage.equals("ja")) {
+        if(curLanguage.equals("ja")) {
             languageSpin.setSelection(0);
             selLanguage = 0;
+        } else {
+            languageSpin.setSelection(1);
+            selLanguage = 1;
         }
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getResources().getString(R.string.str_processing));
+        progressDialog.setCanceledOnTouchOutside(false);
 
         if(SharedPrefManager.getInstance(this).getLogin()) {
             AltarApplication.userId = SharedPrefManager.getInstance(this).getUserId();
@@ -142,6 +149,26 @@ public class LoginActivity extends AppCompatActivity {
         if (responseVo != null) {
             if(responseVo.success == 1) {
 
+                HistoryDB db = new HistoryDB(LoginActivity.this);
+                int count = db.fetchItemByDate(DateUtil.getCurDate()).get(0).getCounts();
+
+                if(count == 0) {
+                    try {
+                        JSONArray jsonArray = new JSONArray(responseVo.count_history);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonItem = jsonArray.getJSONObject(i);
+                            CountsItem item = new CountsItem();
+                            item.setCounts(jsonItem.getInt("count"));
+                            item.setDate(jsonItem.getString("date"));
+
+                            db.addItem(item);
+                        }
+
+                    } catch (JSONException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+
                 AltarApplication.userId = responseVo.user_id;
 
                 SharedPrefManager.getInstance(this).saveEmailAddress(responseVo.email);
@@ -152,6 +179,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 SharedPrefManager.getInstance(this).saveLogin(true);
                 SharedPrefManager.getInstance(this).saveUserId(responseVo.user_id);
+                SharedPrefManager.getInstance(this).savePlan(responseVo.plan);
 
                 SharedPrefManager.getInstance(this).saveBuddhistImage(responseVo.confirm);
                 SharedPrefManager.getInstance(this).saveHonjou(responseVo.honzon);

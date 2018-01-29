@@ -8,6 +8,8 @@
 
     <uses-feature android:name="android.hardware.camera" />
 
+    <uses-permission android:name="com.android.vending.BILLING" />
+
     <application
         android:name=".AltarApplication"
         android:allowBackup="true"
@@ -33,20 +35,30 @@
         <activity
             android:name=".ui.SelectAltarActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.SelectBuddhistActivity" />
-        <activity android:name=".ui.PreviewActivity" />
+        <activity android:name=".ui.SelectBuddhistActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.PreviewActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".ui.UploadHonjouActivity" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".ui.ConfirmActivity" />
-        <activity android:name=".ui.MainActivity" />
-        <activity android:name=".ui.HistoryActivity" />
-        <activity android:name=".ui.ContactUsActivity" />
-        <activity android:name=".ui.TermsActivity" />
-        <activity android:name=".ui.AboutPaymentActivity" />
-        <activity android:name=".ui.NotationActivity" />
-        <activity android:name=".ui.PrivacyActivity" />
+        <activity android:name=".ui.ConfirmActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.HistoryActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.ContactUsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.TermsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.AboutPaymentActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.NotationActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.PrivacyActivity"
+            android:screenOrientation="portrait"/>
 
         <service android:name=".notification.MyFirebaseInstanceIDService">
             <intent-filter>
@@ -59,8 +71,12 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".ui.EditProfileActivity" />
-        <activity android:name=".ui.ForgotPasswordActivity"></activity>
+        <activity android:name=".ui.EditProfileActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.ForgotPasswordActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.ContactConfirmActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

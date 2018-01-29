@@ -70,11 +70,9 @@
             android:id="@+id/iv_honjou"
             android:layout_width="60dp"
             android:layout_height="108dp"
-            android:scaleType="fitXY"
+            android:scaleType="centerInside"
             android:layout_marginTop="145dp"/>
 
     </RelativeLayout>
-
-
 
 </RelativeLayout>

@@ -110,6 +110,7 @@ public class EditProfileActivity extends AppCompatActivity {
         shake = AnimationUtils.loadAnimation(this, R.anim.edittext_shake);
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getResources().getString(R.string.str_processing));
+        progressDialog.setCanceledOnTouchOutside(false);
 
         if(SharedPrefManager.getInstance(this).getLanguage().equals("ja")) {
             language = "ja";
@@ -239,7 +240,18 @@ public class EditProfileActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_back)
     void onClickBack() {
-        finish();
+        Intent intent = new Intent(EditProfileActivity.this, MainActivity.class);
+
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(EditProfileActivity.this, MainActivity.class);
+
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
     @OnClick(R.id.btn_save)

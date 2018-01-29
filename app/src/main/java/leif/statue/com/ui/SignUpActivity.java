@@ -79,6 +79,7 @@ public class SignUpActivity extends AppCompatActivity {
         shake = AnimationUtils.loadAnimation(this, R.anim.edittext_shake);
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getResources().getString(R.string.str_processing));
+        progressDialog.setCanceledOnTouchOutside(false);
 
         selLanguage = getIntent().getIntExtra("language", 0);
         if(selLanguage == 0) {
@@ -96,23 +97,23 @@ public class SignUpActivity extends AppCompatActivity {
                     case 0:
                         language = "ja";
 
-                        Locale locale = new Locale("ja");
+                        /*Locale locale = new Locale("ja");
                         Locale.setDefault(locale);
                         Configuration config = new Configuration();
                         config.locale = locale;
                         getBaseContext().getResources().updateConfiguration(config,
-                                getBaseContext().getResources().getDisplayMetrics());
+                                getBaseContext().getResources().getDisplayMetrics());*/
 
                         break;
                     case 1:
                         language = "en";
 
-                        locale = new Locale("en");
+                        /*locale = new Locale("en");
                         Locale.setDefault(locale);
                         config = new Configuration();
                         config.locale = locale;
                         getBaseContext().getResources().updateConfiguration(config,
-                                getBaseContext().getResources().getDisplayMetrics());
+                                getBaseContext().getResources().getDisplayMetrics());*/
 
                         break;
                 }
@@ -208,6 +209,13 @@ public class SignUpActivity extends AppCompatActivity {
         SignUpResponseVo responseVo = event.getResponse();
         if (responseVo != null) {
             if(responseVo.success == 1) {
+                Locale locale = new Locale(language);
+                Locale.setDefault(locale);
+                Configuration config = new Configuration();
+                config.locale = locale;
+                getBaseContext().getResources().updateConfiguration(config,
+                        getBaseContext().getResources().getDisplayMetrics());
+
                 AltarApplication.userId = responseVo.user_id;
 
                 SharedPrefManager.getInstance(this).saveLanguage(language);
@@ -216,6 +224,7 @@ public class SignUpActivity extends AppCompatActivity {
                 SharedPrefManager.getInstance(this).savePrefecture(responseVo.prefecture);
                 SharedPrefManager.getInstance(this).saveNotice(responseVo.is_notice);
                 SharedPrefManager.getInstance(this).saveGender(responseVo.gender);
+                SharedPrefManager.getInstance(this).savePlan(responseVo.plan);
 
                 SharedPrefManager.getInstance(this).saveLogin(true);
                 SharedPrefManager.getInstance(this).saveUserId(responseVo.user_id);

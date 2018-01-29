@@ -33,10 +33,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import leif.statue.com.R;
+import leif.statue.com.event.GetUpdateHonzonEvent;
 import leif.statue.com.event.UploadCompleteEvent;
 import leif.statue.com.event.UploadHonjouEvent;
+import leif.statue.com.task.GetUpdatedHonzonTask;
 import leif.statue.com.task.UploadCompleteTask;
 import leif.statue.com.util.SharedPrefManager;
+import leif.statue.com.vo.GetUpdatedHonzonResponseVo;
 import leif.statue.com.vo.UploadCompleteResponseVo;
 import leif.statue.com.vo.UploadHonjouResponseVo;
 
@@ -65,7 +68,11 @@ public class ConfirmActivity extends AppCompatActivity {
     private String strCompleteHonzon;
     private String strHonzon;
 
+    private Bitmap honzonBitmap;
+
     private ProgressDialog progressDialog;
+
+    private boolean bUpdatedHonzon = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,11 +83,12 @@ public class ConfirmActivity extends AppCompatActivity {
 
         bEditFlag = getIntent().getBooleanExtra("edit_flag", false);
 
-        if(!bEditFlag) {
-            strHonzon = getIntent().getStringExtra("honzon");
-        } else {
+//        if(!bEditFlag) {
+//            honzonBitmap = (Bitmap) getIntent().getParcelableExtra("honzon");
+//            strHonzon = getStringImage(honzonBitmap);
+//        } else {
             strHonzon = SharedPrefManager.getInstance(this).getHonjou();
-        }
+//        }
 
         ImageLoader.getInstance().displayImage(SharedPrefManager.getInstance(this).getBuddhistImage(), ivPreview);
 
@@ -128,6 +136,15 @@ public class ConfirmActivity extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getResources().getString(R.string.str_processing));
+        progressDialog.setCanceledOnTouchOutside(false);
+
+        bUpdatedHonzon = getIntent().getBooleanExtra("update_honzon", false);
+        if(bUpdatedHonzon) {
+            progressDialog.show();
+
+            GetUpdatedHonzonTask task = new GetUpdatedHonzonTask();
+            task.execute(String.valueOf(SharedPrefManager.getInstance(this).getUserId()), SharedPrefManager.getInstance(this).getLanguage());
+        }
     }
 
     @Override
@@ -151,6 +168,25 @@ public class ConfirmActivity extends AppCompatActivity {
         if (responseVo != null) {
             if(responseVo.success == 1) {
                 showCorrectionDialog();
+            } else {
+                showErrorMessage(responseVo.error_msg);
+            }
+        } else {
+
+        }
+    }
+
+    @Subscribe
+    public void onGetUpdatedHonzonEvent(GetUpdateHonzonEvent event) {
+        hideProgressDialog();
+        GetUpdatedHonzonResponseVo responseVo = event.getResponse();
+        if (responseVo != null) {
+            if(responseVo.success == 1) {
+                SharedPrefManager.getInstance(this).saveHonjou(responseVo.honzon);
+
+                Bitmap bitmap = StringToBitMap(responseVo.honzon);
+
+                ivHonjou.setImageBitmap(bitmap);
             } else {
                 showErrorMessage(responseVo.error_msg);
             }
@@ -224,7 +260,7 @@ public class ConfirmActivity extends AppCompatActivity {
         // Without it the view will have a dimension of 0,0 and the bitmap will be null
 //        honzonLayout.measure(honzonLayout.getMeasuredWidth(), honzonLayout.getMeasuredHeight());
 
-        honzonLayout.layout(params.leftMargin, params.topMargin, honzonLayout.getWidth(), honzonLayout.getHeight());
+        honzonLayout.layout(params.leftMargin, params.topMargin, honzonLayout.getMeasuredWidth() + params.leftMargin, honzonLayout.getMeasuredHeight() + params.topMargin);
 
         completeHonzon = Bitmap.createBitmap(honzonLayout.getDrawingCache());
         honzonLayout.setDrawingCacheEnabled(false); // clear drawing cache

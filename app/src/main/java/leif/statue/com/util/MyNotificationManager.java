@@ -86,7 +86,6 @@ public class MyNotificationManager {
                 .setContentIntent(resultPendingIntent)
                 .setContentTitle(title)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setLargeIcon(BitmapFactory.decodeResource(mCtx.getResources(), R.mipmap.ic_launcher))
                 .setContentText(message)
                 .setSound(soundUri)
                 .build();

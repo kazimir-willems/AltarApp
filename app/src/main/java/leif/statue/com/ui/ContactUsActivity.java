@@ -55,6 +55,7 @@ public class ContactUsActivity extends AppCompatActivity {
         shake = AnimationUtils.loadAnimation(this, R.anim.edittext_shake);
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getResources().getString(R.string.str_processing));
+        progressDialog.setCanceledOnTouchOutside(false);
     }
 
     @Override
@@ -77,7 +78,11 @@ public class ContactUsActivity extends AppCompatActivity {
         ContactUsResponseVo responseVo = event.getResponse();
         if (responseVo != null) {
             if(responseVo.success == 1) {
-                showSuccessMessage();
+                Intent intent = new Intent(ContactUsActivity.this, ContactConfirmActivity.class);
+
+                startActivity(intent);
+
+                finish();
             } else {
                 showErrorMessage(responseVo.error_msg);
             }

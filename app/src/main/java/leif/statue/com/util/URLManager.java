@@ -42,6 +42,10 @@ public class URLManager {
         return HTTP_SERVER + HTTP_FIXED_HEADER + "privacy/";
     }
 
+    public static String getSaveHistoryURL() {
+        return HTTP_SERVER + HTTP_API_HEADER + "savehistory";
+    }
+
     public static String getCommercialURL() {
         return HTTP_SERVER + HTTP_FIXED_HEADER + "commercial/";
     }
@@ -55,7 +59,7 @@ public class URLManager {
     }
 
     public static String getForgotPasswordURL() {
-        return HTTP_SERVER + HTTP_API_HEADER + "forgot?";
+        return HTTP_SERVER + HTTP_API_HEADER + "sendpwdmail?";
     }
 
     public static String getThemeChangeURL() {
@@ -64,5 +68,17 @@ public class URLManager {
 
     public static String getUploadCompleteURL() {
         return HTTP_SERVER + HTTP_API_HEADER + "savelastimg";
+    }
+
+    public static String getCancelMembershipURL() {
+        return HTTP_SERVER + HTTP_API_HEADER + "cancel?";
+    }
+
+    public static String getPayTotalURL() {
+        return HTTP_SERVER + HTTP_API_HEADER + "total?";
+    }
+
+    public static String getUpdatedHonzonURL() {
+        return HTTP_SERVER + HTTP_API_HEADER + "gethonzon?";
     }
 }

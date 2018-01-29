@@ -30,11 +30,8 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
     @BindView(R.id.edt_mail_address)
     TextInputEditText edtMailAddress;
-    @BindView(R.id.edt_password)
-    TextInputEditText edtPassword;
 
     private String mailAddress;
-    private String password;
 
     private Animation shake;
     private ProgressDialog progressDialog;
@@ -58,8 +55,9 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             language = "en";
         }
 
-        progressDialog = new ProgressDialog(this);
+        progressDialog = new ProgressDialog(ForgotPasswordActivity.this);
         progressDialog.setMessage(getResources().getString(R.string.str_processing));
+        progressDialog.setCanceledOnTouchOutside(false);
     }
 
     @Override
@@ -76,29 +74,19 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         EventBus.getDefault().unregister(this);
     }
 
+    @OnClick(R.id.btn_back)
+    void onClickBack() {
+        finish();
+    }
+
     @Subscribe
     public void onForgotPasswordEvent(ForgotPasswordEvent event) {
         hideProgressDialog();
         ForgotPasswordResponseVo responseVo = event.getResponse();
         if (responseVo != null) {
             if(responseVo.success == 1) {
-                AltarApplication.userId = responseVo.user_id;
+                Toast.makeText(ForgotPasswordActivity.this, R.string.sent_content_successfully, Toast.LENGTH_SHORT).show();
 
-                SharedPrefManager.getInstance(this).saveLanguage(language);
-                SharedPrefManager.getInstance(this).saveEmailAddress(responseVo.email);
-                SharedPrefManager.getInstance(this).saveAge(responseVo.age);
-                SharedPrefManager.getInstance(this).savePrefecture(responseVo.prefecture);
-                SharedPrefManager.getInstance(this).saveNotice(responseVo.is_notice);
-                SharedPrefManager.getInstance(this).saveGender(responseVo.gender);
-
-                SharedPrefManager.getInstance(this).saveLogin(true);
-                SharedPrefManager.getInstance(this).saveUserId(responseVo.user_id);
-
-                Intent intent = new Intent(ForgotPasswordActivity.this, MainActivity.class);
-
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
-                startActivity(intent);
                 finish();
             } else {
                 showErrorMessage(responseVo.error_msg);
@@ -111,10 +99,8 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     @OnClick(R.id.btn_save)
     void onClickSave() {
         mailAddress = edtMailAddress.getText().toString();
-        password = edtPassword.getText().toString();
 
         if(!checkMailAddress()) return;
-        if(!checkPassword()) return;
 
         startForgotPassword();
     }
@@ -123,21 +109,12 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         progressDialog.show();
 
         ForgotPasswordTask task = new ForgotPasswordTask();
-        task.execute(mailAddress, password, language);
+        task.execute(mailAddress, language);
     }
 
     private boolean checkMailAddress() {
         if (StringUtil.isEmpty(mailAddress)) {
             showInfoNotice(edtMailAddress);
-            return false;
-        }
-
-        return true;
-    }
-
-    private boolean checkPassword() {
-        if (StringUtil.isEmpty(password)) {
-            showInfoNotice(edtPassword);
             return false;
         }
 

@@ -1,5 +1,8 @@
 package leif.statue.com.vo;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Leif on 12/8/2017.
  */
@@ -15,4 +18,6 @@ public class LoginResponseVo extends BaseResponseVo{
     public String honzon;
     public int music;
     public String last_img;
+    public String count_history;
+    public int plan;
 }

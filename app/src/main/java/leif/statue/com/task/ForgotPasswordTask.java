@@ -14,7 +14,6 @@ import leif.statue.com.vo.SignUpResponseVo;
 public class ForgotPasswordTask extends AsyncTask<String, Void, ForgotPasswordResponseVo> {
 
     private String mailAddress;
-    private String password;
     private String lang;
 
     @Override
@@ -26,10 +25,9 @@ public class ForgotPasswordTask extends AsyncTask<String, Void, ForgotPasswordRe
     protected ForgotPasswordResponseVo doInBackground(String... params) {
         ForgotPasswordProxy simpleProxy = new ForgotPasswordProxy();
         mailAddress = params[0];
-        password = params[1];
-        lang = params[2];
+        lang = params[1];
         try {
-            final ForgotPasswordResponseVo responseVo = simpleProxy.run(mailAddress, password, lang);
+            final ForgotPasswordResponseVo responseVo = simpleProxy.run(mailAddress, lang);
 
             return responseVo;
         } catch (Exception e) {

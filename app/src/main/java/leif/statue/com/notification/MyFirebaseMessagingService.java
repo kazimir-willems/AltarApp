@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import leif.statue.com.R;
+import leif.statue.com.ui.ConfirmActivity;
 import leif.statue.com.ui.MainActivity;
 import leif.statue.com.util.MyNotificationManager;
 
@@ -39,7 +40,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         MyNotificationManager mNotificationManager = new MyNotificationManager(getApplicationContext());
 
         //creating an intent for the notification
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        Intent intent = new Intent(getApplicationContext(), ConfirmActivity.class);
+
+        intent.putExtra("update_honzon", true);
 
         mNotificationManager.showSmallNotification(getApplicationContext().getResources().getString(R.string.app_name), message, intent);
     }

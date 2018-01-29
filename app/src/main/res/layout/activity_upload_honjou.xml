@@ -21,6 +21,13 @@
         android:visibility="gone"
         android:text="@string/btn_choose_photo"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorDarkBlue"
+        android:text="@string/take_photo_comment"
+        android:textSize="20sp"/>
+
     <Button
         android:id="@+id/btn_take_photo"
         android:layout_width="match_parent"

@@ -1,6 +1,9 @@
 package leif.statue.com.util;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class DateUtil {
 
@@ -31,6 +34,13 @@ public class DateUtil {
         sbBuffer.append(year + "-" + month + "-" + day);
 
         return sbBuffer.toString();
+    }
+
+    public static String timeStampToDate(Date date) {
+        DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        String reportDate = df.format(date);
+
+        return reportDate;
     }
 
 }

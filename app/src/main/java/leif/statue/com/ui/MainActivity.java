@@ -1,6 +1,7 @@
 package leif.statue.com.ui;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
@@ -31,6 +32,9 @@ import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -44,9 +48,15 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import leif.statue.com.R;
 import leif.statue.com.db.HistoryDB;
+import leif.statue.com.event.CancelMembershipEvent;
+import leif.statue.com.event.ContactUsEvent;
 import leif.statue.com.model.CountsItem;
+import leif.statue.com.task.CancelMembershipTask;
 import leif.statue.com.util.DateUtil;
+import leif.statue.com.util.IabHelper;
 import leif.statue.com.util.SharedPrefManager;
+import leif.statue.com.vo.CancelMembershipResponseVo;
+import leif.statue.com.vo.ContactUsResponseVo;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -216,6 +226,8 @@ public class MainActivity extends AppCompatActivity {
 
     private HistoryDB historyDB;
 
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -240,6 +252,45 @@ public class MainActivity extends AppCompatActivity {
         Bitmap bitmap = StringToBitMap(SharedPrefManager.getInstance(this).getCompleteHonzon());
 
         ivAltar.setImageBitmap(bitmap);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(getResources().getString(R.string.str_processing));
+        progressDialog.setCanceledOnTouchOutside(false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onCancelMembershipEvent(CancelMembershipEvent event) {
+        hideProgressDialog();
+        CancelMembershipResponseVo responseVo = event.getResponse();
+        if (responseVo != null) {
+            if(responseVo.success == 1) {
+                SharedPrefManager.getInstance(MainActivity.this).saveLogin(false);
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                startActivity(intent);
+                finish();
+            } else {
+                showErrorMessage(responseVo.error_msg);
+            }
+        } else {
+
+        }
     }
 
     @OnClick(R.id.btn_inc_one)
@@ -524,6 +575,27 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                         break;
+                    case R.id.menu_cancel_membership:
+                        AlertDialog.Builder builder;
+                        builder = new AlertDialog.Builder(MainActivity.this);
+
+                        builder.setMessage(R.string.msg_cancel_membership)
+                                .setPositiveButton(R.string.btn_yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        progressDialog.show();
+
+                                        CancelMembershipTask task = new CancelMembershipTask();
+                                        task.execute(String.valueOf(SharedPrefManager.getInstance(MainActivity.this).getUserId()), SharedPrefManager.getInstance(MainActivity.this).getLanguage());
+                                    }
+                                })
+                                .setNegativeButton(R.string.btn_no, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .show();
+
+                        break;
                 }
                 return true;
             }
@@ -648,5 +720,14 @@ public class MainActivity extends AppCompatActivity {
             e.getMessage();
             return null;
         }
+    }
+
+    private void hideProgressDialog() {
+        if(progressDialog.isShowing())
+            progressDialog.dismiss();
+    }
+
+    private void showErrorMessage(String message) {
+        Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
     }
 }

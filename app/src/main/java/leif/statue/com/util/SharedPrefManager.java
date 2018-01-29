@@ -22,6 +22,7 @@ public class SharedPrefManager {
     private static final String TAG_PASSWORD = "password";
     private static final String TAG_COMPLETE_HONZON = "complete_honzon";
     private static final String TAG_MUSIC_LEVEL = "music_level";
+    private static final String TAG_PLAN = "plan";
 
     private static SharedPrefManager mInstance;
     private static Context mCtx;
@@ -274,5 +275,19 @@ public class SharedPrefManager {
     public int getMusicLevel(){
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return  sharedPreferences.getInt(TAG_MUSIC_LEVEL, 1);
+    }
+
+    public boolean savePlan(int value){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(TAG_PLAN, value);
+        editor.apply();
+        return true;
+    }
+
+    //this method will fetch the device token from shared preferences
+    public int getPlan(){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return  sharedPreferences.getInt(TAG_PLAN, 1);
     }
 }

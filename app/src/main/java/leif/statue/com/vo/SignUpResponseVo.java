@@ -11,4 +11,5 @@ public class SignUpResponseVo extends BaseResponseVo{
     public int age;
     public int gender;
     public int is_notice;
+    public int plan;
 }

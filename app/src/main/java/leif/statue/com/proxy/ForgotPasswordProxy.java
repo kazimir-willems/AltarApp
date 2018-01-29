@@ -10,8 +10,8 @@ import leif.statue.com.vo.SignUpResponseVo;
 
 public class ForgotPasswordProxy extends BaseProxy {
 
-    public ForgotPasswordResponseVo run(String mailAddress, String password, String lang) throws IOException {
-        String params = "email=" + mailAddress + "&password=" + password + "&lang=" + lang;
+    public ForgotPasswordResponseVo run(String mailAddress, String lang) throws IOException {
+        String params = "email=" + mailAddress + "&lang=" + lang;
 
         String contentString = getPlain(URLManager.getForgotPasswordURL(), params);
 
