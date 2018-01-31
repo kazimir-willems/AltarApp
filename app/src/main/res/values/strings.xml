@@ -71,6 +71,9 @@
     <string name="input_password">Please input Password.</string>
     <string name="input_mail_password">Please input email address and password.</string>
     <string name="msg_cancel_membership">Cancel the Membership ? </string>
+    <string name="msg_adjust_honzon">Please adjust the position of your Gohonzon.</string>
+    <string name="msg_notification_comment">After the image is revised, the notification will be sent to you, so please turn on the notification settings of the application.</string>
+    <string name="msg_save_history">If you want to inherit the count number by model change etc, you can take over by logging in from another model after pressing the registration button below.</string>
     <string name="btn_back_main">Main Page</string>
     <string name="count_format">%07ds</string>
     <string name="correction_info">We provide the correction for your picture we have received with \108. Trimming (cutting off) and adjustment for light level will be provided. By the next business day, we will switch it to the corrected one (the re-correction will be possible just for once).</string>

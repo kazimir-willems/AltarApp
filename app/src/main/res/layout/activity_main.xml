@@ -237,7 +237,7 @@
             android:id="@+id/iv_altar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerInside"
+            android:scaleType="fitCenter"
             android:background="@drawable/border_background"
             android:padding="1dp"
             android:src="@mipmap/img_preview"/>

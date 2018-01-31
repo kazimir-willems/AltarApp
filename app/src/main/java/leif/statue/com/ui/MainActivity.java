@@ -7,11 +7,7 @@ import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.AudioFormat;
-import android.media.AudioManager;
-import android.media.AudioTrack;
 import android.media.MediaPlayer;
-import android.os.Environment;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -19,29 +15,18 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupMenu;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.logging.SocketHandler;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,14 +34,11 @@ import butterknife.OnClick;
 import leif.statue.com.R;
 import leif.statue.com.db.HistoryDB;
 import leif.statue.com.event.CancelMembershipEvent;
-import leif.statue.com.event.ContactUsEvent;
 import leif.statue.com.model.CountsItem;
 import leif.statue.com.task.CancelMembershipTask;
 import leif.statue.com.util.DateUtil;
-import leif.statue.com.util.IabHelper;
 import leif.statue.com.util.SharedPrefManager;
 import leif.statue.com.vo.CancelMembershipResponseVo;
-import leif.statue.com.vo.ContactUsResponseVo;
 
 public class MainActivity extends AppCompatActivity {
 

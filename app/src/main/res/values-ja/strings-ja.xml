@@ -25,7 +25,7 @@
     <string name="btn_goto_confirm_screen">決定</string>
     <string name="btn_choose_photo">写真を選ぶ</string>
     <string name="btn_take_photo">写真を撮影する</string>
-    <string name="title_image_correction">画像補正のご案内</string>
+    <string name="title_image_correction">画像補正(有料)のご案内</string>
     <string name="btn_apply">申し込む</string>
     <string name="btn_no_need">不要</string>
     <string name="btn_history">履歴画面</string>
@@ -71,10 +71,12 @@
     <string name="input_password"> パスワードをご入力下さい。</string>
     <string name="input_mail_password">メールアドレスとパスワードをご入力下さい。</string>
     <string name="msg_cancel_membership">退会しますか？</string>
+    <string name="msg_adjust_honzon">ご本尊の位置を調整して下さい</string>
+    <string name="msg_notification_comment">画像が修正対応後、お客様には通知が届きますので、アプリの通知設定をONにしてください。</string>
+    <string name="msg_save_history">機種変更等でカウント数を引き継ぐ場合は、下記の登録ボタンを押した後に他の機種からログインすることで引き継ぐことができます。</string>
     <string name="btn_back_main">メインページへ</string>
     <string name="count_format">%07d回</string>
-    <string name="correction_info">登録していただいた写真の補正を別途108円で承っております。トリミング（切り抜き）及び明るさ調整を行います。翌営業日中までに、補正させていただいた写真を当社にて切り替えます。
-（再補正は1度まで可能です）</string>
+    <string name="correction_info">登録していただいた写真の補正を別途108円で承っております。トリミング（切り抜き）及び明るさ調整を行います。翌営業日中までに、補正させていただいた写真を当社にて切り替えます。\n（再補正は1度まで可能です）</string>
     <string name="take_photo_comment">ご本尊をスマートフォンのカメラで撮影していただき、自動トリミングを使って調整していただいた後、切り取りボタンを押してください。</string>
     <string name="send_contact_succeess">お問い合わせいただき、誠にありがとうございました。</string>
     <string name="content_about_payment">お使いの端末により変更・解約方法が異な

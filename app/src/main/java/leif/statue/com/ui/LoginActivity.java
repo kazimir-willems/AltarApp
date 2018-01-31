@@ -65,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
         if(SharedPrefManager.getInstance(this).getFirstLogin()) {
             String currentLanguage = Locale.getDefault().getLanguage();
             SharedPrefManager.getInstance(this).saveLanguage(Locale.getDefault().getLanguage());
+            SharedPrefManager.getInstance(this).saveFirstLogin(false);
         }
 
         languageSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -115,6 +116,13 @@ public class LoginActivity extends AppCompatActivity {
             selLanguage = 1;
         }
 
+        Locale locale = new Locale(curLanguage);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config,
+                getBaseContext().getResources().getDisplayMetrics());
+
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getResources().getString(R.string.str_processing));
         progressDialog.setCanceledOnTouchOutside(false);
@@ -149,10 +157,13 @@ public class LoginActivity extends AppCompatActivity {
         if (responseVo != null) {
             if(responseVo.success == 1) {
 
+                SharedPrefManager.getInstance(this).saveFirstLogin(false);
+
                 HistoryDB db = new HistoryDB(LoginActivity.this);
                 int count = db.fetchItemByDate(DateUtil.getCurDate()).get(0).getCounts();
 
                 if(count == 0) {
+                    db.removeAllDatas();
                     try {
                         JSONArray jsonArray = new JSONArray(responseVo.count_history);
                         for (int i = 0; i < jsonArray.length(); i++) {

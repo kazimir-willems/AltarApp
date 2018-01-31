@@ -1,6 +1,7 @@
 package leif.statue.com.ui;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -36,6 +37,7 @@ import leif.statue.com.R;
 import leif.statue.com.event.GetUpdateHonzonEvent;
 import leif.statue.com.event.UploadCompleteEvent;
 import leif.statue.com.event.UploadHonjouEvent;
+import leif.statue.com.task.CancelMembershipTask;
 import leif.statue.com.task.GetUpdatedHonzonTask;
 import leif.statue.com.task.UploadCompleteTask;
 import leif.statue.com.util.SharedPrefManager;
@@ -144,7 +146,45 @@ public class ConfirmActivity extends AppCompatActivity {
 
             GetUpdatedHonzonTask task = new GetUpdatedHonzonTask();
             task.execute(String.valueOf(SharedPrefManager.getInstance(this).getUserId()), SharedPrefManager.getInstance(this).getLanguage());
+        } else {
+            showCommentDialog();
         }
+    }
+
+    private void showCommentDialog() {
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(ConfirmActivity.this);
+
+        builder.setMessage(R.string.msg_adjust_honzon)
+                .setPositiveButton(R.string.btn_ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+    }
+
+    private void showNotificationDialog() {
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(ConfirmActivity.this);
+
+        builder.setMessage(R.string.msg_notification_comment)
+                .setPositiveButton(R.string.btn_ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        SharedPrefManager.getInstance(ConfirmActivity.this).saveHonjou(strHonzon);
+                        SharedPrefManager.getInstance(ConfirmActivity.this).saveCompleteHonzon(strCompleteHonzon);
+
+                        Intent intent = new Intent(ConfirmActivity.this, MainActivity.class);
+
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                        startActivity(intent);
+
+                        dialog.dismiss();
+                        finish();
+                    }
+                })
+                .show();
     }
 
     @Override
@@ -187,6 +227,8 @@ public class ConfirmActivity extends AppCompatActivity {
                 Bitmap bitmap = StringToBitMap(responseVo.honzon);
 
                 ivHonjou.setImageBitmap(bitmap);
+
+                showCommentDialog();
             } else {
                 showErrorMessage(responseVo.error_msg);
             }
@@ -204,17 +246,8 @@ public class ConfirmActivity extends AppCompatActivity {
         resultDialogView.findViewById(R.id.btn_apply).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPrefManager.getInstance(ConfirmActivity.this).saveHonjou(strHonzon);
-                SharedPrefManager.getInstance(ConfirmActivity.this).saveCompleteHonzon(strCompleteHonzon);
+                showNotificationDialog();
 
-                Intent intent = new Intent(ConfirmActivity.this, MainActivity.class);
-
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
-                startActivity(intent);
-
-                infoDialog.dismiss();
-                finish();
             }
         });
         resultDialogView.findViewById(R.id.btn_no_need).setOnClickListener(new View.OnClickListener() {
