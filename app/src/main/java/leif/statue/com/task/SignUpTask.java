@@ -22,6 +22,7 @@ public class SignUpTask extends AsyncTask<String, Void, SignUpResponseVo> {
     private String isNotice;
     private String plan;
     private String token;
+    private String orderId;
 
     @Override
     protected void onPreExecute() {
@@ -40,8 +41,9 @@ public class SignUpTask extends AsyncTask<String, Void, SignUpResponseVo> {
         isNotice = params[6];
         plan = params[7];
         token = params[8];
+        orderId = params[9];
         try {
-            final SignUpResponseVo responseVo = simpleProxy.run(mailAddress, password, lang, prefecture, age, gender, isNotice, plan, token);
+            final SignUpResponseVo responseVo = simpleProxy.run(mailAddress, password, lang, prefecture, age, gender, isNotice, plan, token, orderId);
 
             return responseVo;
         } catch (Exception e) {

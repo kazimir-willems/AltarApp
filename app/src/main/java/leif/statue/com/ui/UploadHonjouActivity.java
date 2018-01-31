@@ -45,33 +45,9 @@ import leif.statue.com.vo.UploadHonjouResponseVo;
 public class UploadHonjouActivity extends AppCompatActivity {
 
     private Uri croppedURI;
-    private ProgressDialog progressDialog;
-
-    @BindView(R.id.iv_image)
-    ImageView ivImage;
 
     private int buddhistId;
     private Bitmap bitmap;
-
-    @BindView(R.id.btn_take_photo)
-    Button btnTakePhoto;
-    @BindView(R.id.btn_upload_own)
-    Button btnUploadOwn;
-    @BindView(R.id.btn_upload_admin)
-    Button btnUploadAdmin;
-
-    private boolean bSubscribed = false;
-
-    private static final int RC_REQUEST = 10001;
-
-    private String subscriptionID = CommonConsts.PRODUCT_ANNUAL_PLAN;
-
-    BillingProcessor bp;
-
-    private int modifyFlag = 0;
-//    IabBroadcastReceiver mBroadcastReceiver;
-
-    private static final String MERCHANT_ID=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,57 +57,6 @@ public class UploadHonjouActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         buddhistId = getIntent().getIntExtra("butsugu", 0);
-
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage(getResources().getString(R.string.str_processing));
-        progressDialog.setCanceledOnTouchOutside(false);
-
-        if(SharedPrefManager.getInstance(this).getPlan() == 1) {
-            subscriptionID = CommonConsts.PRODUCT_ANNUAL_PLAN;
-        } else if (SharedPrefManager.getInstance(this).getPlan() == 2) {
-            subscriptionID = CommonConsts.PRODUCT_MONTHLY_PLAN;
-        }
-
-        if(!BillingProcessor.isIabServiceAvailable(this)) {
-            Log.v("STAW", "In-app billing service is unavailable, please upgrade Android Market/Play to version >= 3.9.16");
-        }
-
-        bp = new BillingProcessor(this, CommonConsts.IN_APP_BILLING_RSA_KEY, MERCHANT_ID, new BillingProcessor.IBillingHandler() {
-            @Override
-            public void onProductPurchased(@NonNull String productId, @Nullable TransactionDetails details) {
-                progressDialog.show();
-
-                PayTotalTask task = new PayTotalTask();
-                task.execute(String.valueOf(SharedPrefManager.getInstance(UploadHonjouActivity.this).getUserId()), SharedPrefManager.getInstance(UploadHonjouActivity.this).getLanguage(), DateUtil.timeStampToDate(details.purchaseInfo.purchaseData.purchaseTime), details.purchaseInfo.purchaseData.orderId, String.valueOf(SharedPrefManager.getInstance(UploadHonjouActivity.this).getPlan()));
-
-                bSubscribed = true;
-            }
-            @Override
-            public void onBillingError(int errorCode, @Nullable Throwable error) {
-                Log.v("STAW", String.valueOf(errorCode));
-            }
-            @Override
-            public void onBillingInitialized() {
-                Log.v("STAW", "Initialized");
-                TransactionDetails subAnnual = bp.getSubscriptionTransactionDetails(CommonConsts.PRODUCT_ANNUAL_PLAN);
-                TransactionDetails subMonthly = bp.getSubscriptionTransactionDetails(CommonConsts.PRODUCT_MONTHLY_PLAN);
-
-                if(subAnnual != null || subMonthly != null) {
-                    bSubscribed = true;
-                }
-            }
-            @Override
-            public void onPurchaseHistoryRestored() {
-                Log.v("STAW", "HISTORY");
-            }
-        });
-    }
-
-    @Override
-    public void onDestroy() {
-        if (bp != null)
-            bp.release();
-        super.onDestroy();
     }
 
     @OnClick(R.id.btn_back)
@@ -139,113 +64,9 @@ public class UploadHonjouActivity extends AppCompatActivity {
         finish();
     }
 
-    @OnClick(R.id.btn_choose_photo)
-    void onClickChoosePhoto() {
-
-    }
-
     @OnClick(R.id.btn_take_photo)
     void onClickTakePhoto() {
         CropImage.activity(null).setGuidelines(CropImageView.Guidelines.ON).start(this);
-    }
-
-    @OnClick(R.id.btn_upload_own)
-    void onClickUploadOwn() {
-        modifyFlag = 0;
-        try {
-            bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), croppedURI);
-
-            String imgText = getStringImage(bitmap);
-
-            progressDialog.show();
-
-            UploadHonjouTask task = new UploadHonjouTask();
-            task.execute(String.valueOf(AltarApplication.userId), imgText, String.valueOf(buddhistId), String.valueOf(0), SharedPrefManager.getInstance(this).getLanguage());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @OnClick(R.id.btn_upload_admin)
-    void onClickUploadAdmin() {
-        modifyFlag = 1;
-        if(bSubscribed) {
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), croppedURI);
-
-                String imgText = getStringImage(bitmap);
-
-                progressDialog.show();
-
-                UploadHonjouTask task = new UploadHonjouTask();
-                task.execute(String.valueOf(AltarApplication.userId), imgText, String.valueOf(buddhistId), String.valueOf(1), SharedPrefManager.getInstance(this).getLanguage());
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            bp.subscribe(this, subscriptionID);
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Subscribe
-    public void onUploadHonjouEvent(UploadHonjouEvent event) {
-        hideProgressDialog();
-        UploadHonjouResponseVo responseVo = event.getResponse();
-        if (responseVo != null) {
-            if(responseVo.success == 1) {
-                if(modifyFlag == 0) {
-                    Intent intent = new Intent(UploadHonjouActivity.this, ConfirmActivity.class);
-
-                    SharedPrefManager.getInstance(this).saveHonjou(getStringImage(bitmap));
-//                intent.putExtra("honzon", getStringImage(bitmap));
-                    intent.putExtra("edit_flag", false);
-
-                    startActivity(intent);
-                    finish();
-                } else {
-                    Intent intent = new Intent(UploadHonjouActivity.this, MainActivity.class);
-
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
-                    startActivity(intent);
-                }
-            } else {
-                showErrorMessage(responseVo.error_msg);
-            }
-        } else {
-
-        }
-    }
-
-    @Subscribe
-    public void onPaytotalEvent(PayTotalEvent event) {
-        hideProgressDialog();
-        PayTotalResponseVo responseVo = event.getResponse();
-        if (responseVo != null) {
-            if(responseVo.success == 1) {
-                btnUploadAdmin.performClick();
-            } else {
-                showErrorMessage(responseVo.error_msg);
-            }
-        } else {
-
-        }
     }
 
     @Override
@@ -257,31 +78,24 @@ public class UploadHonjouActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 croppedURI = result.getUri();
 
-                btnTakePhoto.setVisibility(View.GONE);
-                btnUploadOwn.setVisibility(View.VISIBLE);
-                btnUploadAdmin.setVisibility(View.VISIBLE);
-
-                /*try {
+                try {
                     bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), croppedURI);
 
-                    String imgText = getStringImage(bitmap);
+                    Intent intent = new Intent(UploadHonjouActivity.this, ConfirmActivity.class);
 
-                    progressDialog.show();
+                    SharedPrefManager.getInstance(this).saveHonjou(getStringImage(bitmap));
 
-                    UploadHonjouTask task = new UploadHonjouTask();
-                    task.execute(String.valueOf(AltarApplication.userId), imgText, String.valueOf(buddhistId), String.valueOf(0), SharedPrefManager.getInstance(UploadHonjouActivity.this).getLanguage());
+                    intent.putExtra("edit_flag", false);
+
+                    startActivity(intent);
 
                 } catch (IOException e) {
                     e.printStackTrace();
-                }*/
+                }
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
 
             }
-        }
-
-        if (!bp.handleActivityResult(requestCode, resultCode, data)) {
-            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -291,14 +105,5 @@ public class UploadHonjouActivity extends AppCompatActivity {
         byte[] imageBytes = baos.toByteArray();
         String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
         return encodedImage;
-    }
-
-    private void hideProgressDialog() {
-        if(progressDialog.isShowing())
-            progressDialog.dismiss();
-    }
-
-    private void showErrorMessage(String message) {
-        Toast.makeText(UploadHonjouActivity.this, message, Toast.LENGTH_SHORT).show();
     }
 }

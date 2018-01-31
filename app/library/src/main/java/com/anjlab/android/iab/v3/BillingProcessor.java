@@ -777,11 +777,11 @@ public class BillingProcessor extends BillingBase
 		try
 		{
 			TransactionDetails transaction = getPurchaseTransactionDetails(productId, cachedProducts);
-			if (transaction != null && !TextUtils.isEmpty(transaction.purchaseToken))
+			if (transaction != null && !TextUtils.isEmpty(transaction.purchaseInfo.purchaseData.purchaseToken))
 			{
 				int response = billingService.consumePurchase(Constants.GOOGLE_API_VERSION,
 															  contextPackageName,
-															  transaction.purchaseToken);
+															  transaction.purchaseInfo.purchaseData.purchaseToken);
 				if (response == Constants.BILLING_RESPONSE_RESULT_OK)
 				{
 					cachedProducts.remove(productId);

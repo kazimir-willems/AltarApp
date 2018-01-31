@@ -11,4 +11,5 @@ public class CommonConsts {
 
     public static final String PRODUCT_MONTHLY_PLAN = "sgi_butsudan_month_plan";
     public static final String PRODUCT_ANNUAL_PLAN = "sgi_butsudan_annual_plan";
+    public static final String PRODUCT_UPLOAD_HONZON = "sgi_modify_honzon";
 }

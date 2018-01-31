@@ -3,9 +3,13 @@ package leif.statue.com.ui;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -17,9 +21,14 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.anjlab.android.iab.v3.BillingProcessor;
+import com.anjlab.android.iab.v3.TransactionDetails;
+import com.theartofdev.edmodo.cropper.CropImage;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.IOException;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -27,8 +36,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import leif.statue.com.AltarApplication;
 import leif.statue.com.R;
+import leif.statue.com.consts.CommonConsts;
 import leif.statue.com.event.SignUpEvent;
+import leif.statue.com.task.PayTotalTask;
 import leif.statue.com.task.SignUpTask;
+import leif.statue.com.util.DateUtil;
 import leif.statue.com.util.SharedPrefManager;
 import leif.statue.com.util.StringUtil;
 import leif.statue.com.vo.SignUpResponseVo;
@@ -68,6 +80,17 @@ public class SignUpActivity extends AppCompatActivity {
     private int isNotice = 1;
     private int plan = 1;
     private int selLanguage = 0;
+
+    private boolean bSubscribed = false;
+
+    private String subscriptionID = CommonConsts.PRODUCT_ANNUAL_PLAN;
+
+    BillingProcessor bp;
+
+    private static final String MERCHANT_ID=null;
+
+    private String orderId = "";
+    private String purchaseDate = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,6 +187,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 plan = 1;
+                subscriptionID = CommonConsts.PRODUCT_ANNUAL_PLAN;
             }
         });
 
@@ -171,6 +195,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 plan = 2;
+                subscriptionID = CommonConsts.PRODUCT_MONTHLY_PLAN;
             }
         });
 
@@ -187,6 +212,47 @@ public class SignUpActivity extends AppCompatActivity {
                 gender = 2;
             }
         });
+
+        if(!BillingProcessor.isIabServiceAvailable(this)) {
+            Log.v("STAW", "In-app billing service is unavailable, please upgrade Android Market/Play to version >= 3.9.16");
+        }
+
+        bp = new BillingProcessor(this, CommonConsts.IN_APP_BILLING_RSA_KEY, MERCHANT_ID, new BillingProcessor.IBillingHandler() {
+            @Override
+            public void onProductPurchased(@NonNull String productId, @Nullable TransactionDetails details) {
+                bSubscribed = true;
+
+                purchaseDate = DateUtil.timeStampToDate(details.purchaseInfo.purchaseData.purchaseTime);
+                orderId = details.purchaseInfo.purchaseData.orderId;
+
+                startSignUp();
+            }
+            @Override
+            public void onBillingError(int errorCode, @Nullable Throwable error) {
+                Log.v("STAW", String.valueOf(errorCode));
+            }
+            @Override
+            public void onBillingInitialized() {
+                Log.v("STAW", "Initialized");
+                TransactionDetails subAnnual = bp.getSubscriptionTransactionDetails(CommonConsts.PRODUCT_ANNUAL_PLAN);
+                TransactionDetails subMonthly = bp.getSubscriptionTransactionDetails(CommonConsts.PRODUCT_MONTHLY_PLAN);
+
+                if((subAnnual != null && subAnnual.purchaseInfo.purchaseData.autoRenewing) || (subMonthly != null && subMonthly.purchaseInfo.purchaseData.autoRenewing)) {
+                    bSubscribed = true;
+                    if(subAnnual != null) {
+                        purchaseDate = DateUtil.timeStampToDate(subAnnual.purchaseInfo.purchaseData.purchaseTime);
+                        orderId = subAnnual.purchaseInfo.purchaseData.orderId;
+                    } else if (subMonthly != null) {
+                        purchaseDate = DateUtil.timeStampToDate(subMonthly.purchaseInfo.purchaseData.purchaseTime);
+                        orderId = subMonthly.purchaseInfo.purchaseData.orderId;
+                    }
+                }
+            }
+            @Override
+            public void onPurchaseHistoryRestored() {
+                Log.v("STAW", "HISTORY");
+            }
+        });
     }
 
     @Override
@@ -201,6 +267,13 @@ public class SignUpActivity extends AppCompatActivity {
         super.onPause();
 
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        if (bp != null)
+            bp.release();
+        super.onDestroy();
     }
 
     @Subscribe
@@ -266,7 +339,11 @@ public class SignUpActivity extends AppCompatActivity {
             return;
         }
 
-        startSignUp();
+        if(bSubscribed) {
+            startSignUp();
+        } else {
+            bp.subscribe(this, subscriptionID);
+        }
     }
 
     @OnClick(R.id.btn_terms_and_conditions)
@@ -282,7 +359,7 @@ public class SignUpActivity extends AppCompatActivity {
         progressDialog.show();
 
         SignUpTask task = new SignUpTask();
-        task.execute(mailAddress, password, language, String.valueOf(prefecture), String.valueOf(age), String.valueOf(gender), String.valueOf(isNotice), String.valueOf(plan), SharedPrefManager.getInstance(this).getDeviceToken());
+        task.execute(mailAddress, password, language, String.valueOf(prefecture), String.valueOf(age), String.valueOf(gender), String.valueOf(isNotice), String.valueOf(plan), SharedPrefManager.getInstance(this).getDeviceToken(), orderId);
     }
 
     private boolean checkMailAddress() {
@@ -317,5 +394,12 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void showErrorMessage(String message) {
         Toast.makeText(SignUpActivity.this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (!bp.handleActivityResult(requestCode, resultCode, data)) {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

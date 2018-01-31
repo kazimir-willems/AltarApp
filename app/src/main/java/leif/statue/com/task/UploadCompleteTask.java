@@ -14,7 +14,9 @@ import leif.statue.com.vo.UploadHonjouResponseVo;
 public class UploadCompleteTask extends AsyncTask<String, Void, UploadCompleteResponseVo> {
 
     private String userId;
-    private String image;
+    private String lastImage;
+    private String honzonImage;
+    private String modifyFlag;
     private String lang;
 
     @Override
@@ -26,10 +28,12 @@ public class UploadCompleteTask extends AsyncTask<String, Void, UploadCompleteRe
     protected UploadCompleteResponseVo doInBackground(String... params) {
         UploadCompleteProxy simpleProxy = new UploadCompleteProxy();
         userId = params[0];
-        image = params[1];
-        lang = params[2];
+        lastImage = params[1];
+        honzonImage = params[2];
+        modifyFlag = params[3];
+        lang = params[4];
         try {
-            final UploadCompleteResponseVo responseVo = simpleProxy.run(userId, image, lang);
+            final UploadCompleteResponseVo responseVo = simpleProxy.run(userId, lastImage, honzonImage, modifyFlag, lang);
 
             return responseVo;
         } catch (Exception e) {

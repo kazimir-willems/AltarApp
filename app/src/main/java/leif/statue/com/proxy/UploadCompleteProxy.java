@@ -14,10 +14,12 @@ import okhttp3.RequestBody;
 
 public class UploadCompleteProxy extends BaseProxy {
 
-    public UploadCompleteResponseVo run(String userId, String img, String lang) throws IOException {
+    public UploadCompleteResponseVo run(String userId, String lastImg, String honzonImg, String modifyFlag, String lang) throws IOException {
         FormBody.Builder formBuilder = new FormBody.Builder();
         formBuilder.add("user_id", userId);
-        formBuilder.add("file", img);
+        formBuilder.add("last_img", lastImg);
+        formBuilder.add("honzon", honzonImg);
+        formBuilder.add("modify_flag", modifyFlag);
         formBuilder.add("lang", lang);
 
         RequestBody formBody = formBuilder.build();
