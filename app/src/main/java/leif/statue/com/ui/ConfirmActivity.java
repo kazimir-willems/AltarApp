@@ -278,6 +278,7 @@ public class ConfirmActivity extends AppCompatActivity {
         GetUpdatedHonzonResponseVo responseVo = event.getResponse();
         if (responseVo != null) {
             if(responseVo.success == 1) {
+                strHonzon = responseVo.honzon;
                 SharedPrefManager.getInstance(this).saveHonjou(responseVo.honzon);
 
                 Bitmap bitmap = StringToBitMap(responseVo.honzon);
@@ -337,6 +338,7 @@ public class ConfirmActivity extends AppCompatActivity {
             showCorrectionDialog();
         } else {
             bModify = false;
+            progressDialog.show();
 
             UploadCompleteTask task = new UploadCompleteTask();
             task.execute(String.valueOf(SharedPrefManager.getInstance(ConfirmActivity.this).getUserId()), strCompleteHonzon, strHonzon, String.valueOf(0), SharedPrefManager.getInstance(ConfirmActivity.this).getLanguage());

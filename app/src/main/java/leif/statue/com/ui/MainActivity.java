@@ -529,8 +529,6 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.menu_terms_of_service:
                         intent = new Intent(MainActivity.this, TermsActivity.class);
 
-                        intent.putExtra("language", SharedPrefManager.getInstance(MainActivity.this).getLanguage());
-
                         startActivity(intent);
                         break;
                     case R.id.menu_about_payment:

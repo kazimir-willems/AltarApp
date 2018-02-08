@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SGI仏壇アプリ</string>
+    <string name="app_name">SGI Butsudan APP</string>
 
     <string name="prompt_pass">PASS</string>
     <string name="prompt_id">ID</string>
@@ -14,8 +14,8 @@
     <string name="prompt_gender">Gender</string>
     <string name="receive_notification_via_mail">Receive notifications via E-Mail</string>
     <string name="terms_and_conditions">Terms and Conditions</string>
-    <string name="annual_amount">¥ 1,080 / year</string>
-    <string name="monthly_amount">¥ 108 / month</string>
+    <string name="annual_amount">¥ 1,200 / year</string>
+    <string name="monthly_amount">¥ 120 / month</string>
     <string name="title_sign_up">Sign Up</string>
     <string name="title_select_altar">Select Altar</string>
     <string name="choose_altar">Please choose the type of altar from the following.</string>
@@ -76,7 +76,7 @@
     <string name="msg_save_history">If you want to inherit the count number by model change etc, you can take over by logging in from another model after pressing the registration button below.</string>
     <string name="btn_back_main">Main Page</string>
     <string name="count_format">%07ds</string>
-    <string name="correction_info">We provide the correction for your picture we have received with \108. Trimming (cutting off) and adjustment for light level will be provided. By the next business day, we will switch it to the corrected one (the re-correction will be possible just for once).</string>
+    <string name="correction_info">We provide the correction for your picture we have received with \120. Trimming (cutting off) and adjustment for light level will be provided. By the next business day, we will switch it to the corrected one (the re-correction will be possible just for once).</string>
     <string name="take_photo_comment">Take the picture of Gohonzon with the camera of your smartphone, adjust it with automatic trimming function and then press cut-off button.</string>
     <string name="send_contact_succeess">Thank you for your inquiry.</string>
     <string name="content_about_payment">お使いの端末により変更・解約方法が異な

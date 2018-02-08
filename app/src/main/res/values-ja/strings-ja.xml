@@ -14,8 +14,8 @@
     <string name="prompt_gender">性別</string>
     <string name="receive_notification_via_mail">お知らせをメールで受け取る</string>
     <string name="terms_and_conditions">SGI 仏壇アプリ利用規約</string>
-    <string name="annual_amount">年額 1,080 円</string>
-    <string name="monthly_amount">月額 108 円</string>
+    <string name="annual_amount">年額 1,200 円</string>
+    <string name="monthly_amount">月額 120 円</string>
     <string name="title_sign_up">登録</string>
     <string name="title_select_altar">仏壇選択</string>
     <string name="choose_altar">以下より仏壇のタイプをお選び下さい。</string>
@@ -76,7 +76,7 @@
     <string name="msg_save_history">機種変更等でカウント数を引き継ぐ場合は、下記の保存ボタンを押した後に他の機種からログインすることで引き継ぐことができます。</string>
     <string name="btn_back_main">メインページへ</string>
     <string name="count_format">%07d回</string>
-    <string name="correction_info">登録していただいた写真の補正を別途108円で承っております。トリミング（切り抜き）及び明るさ調整を行います。翌営業日中までに、補正させていただいた写真を当社にて切り替えます。\n（再補正は1度まで可能です）</string>
+    <string name="correction_info">登録していただいた写真の補正を別途120円で承っております。トリミング（切り抜き）及び明るさ調整を行います。翌営業日中までに、補正させていただいた写真を当社にて切り替えます。\n（再補正は1度まで可能です）</string>
     <string name="take_photo_comment">ご本尊をスマートフォンのカメラで撮影していただき、自動トリミングを使って調整していただいた後、切り取りボタンを押してください。</string>
     <string name="send_contact_succeess">お問い合わせいただき、誠にありがとうございました。</string>
     <string name="content_about_payment">お使いの端末により変更・解約方法が異な

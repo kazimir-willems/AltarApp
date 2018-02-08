@@ -23,9 +23,7 @@ public class TermsActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        String language = getIntent().getStringExtra("language");
-
-        String url = URLManager.getTermsURL() + language;
+        String url = URLManager.getTermsURL() + SharedPrefManager.getInstance(this).getLanguage();
         contentView.loadUrl(url);
     }
 
