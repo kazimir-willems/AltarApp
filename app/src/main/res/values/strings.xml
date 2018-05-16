@@ -104,11 +104,13 @@ GooglePlay ストアから定期購読を解約し
     </array>
 
     <array name="arr_gender">
+        <item>- Select -</item>
         <item>Male</item>
         <item>Female</item>
     </array>
 
     <array name="arr_prefecture">
+        <item>- Select -</item>
         <item>Hokkaido</item>
         <item>Aomori</item>
         <item>Iwate</item>
@@ -160,6 +162,7 @@ GooglePlay ストアから定期購読を解約し
     </array>
 
     <array name="arr_age">
+        <item>- Select -</item>
         <item>Below 19</item>
         <item>20\'s</item>
         <item>30\'s</item>

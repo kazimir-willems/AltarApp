@@ -104,11 +104,13 @@ GooglePlay ストアから定期購読を解約し
     </array>
 
     <array name="arr_gender">
+        <item>- 選択 -</item>
         <item>男性</item>
         <item>女性</item>
     </array>
 
     <array name="arr_prefecture">
+        <item>- 選択 -</item>
         <item>北海道</item>
         <item>青森県</item>
         <item>岩手県</item>
@@ -160,6 +162,7 @@ GooglePlay ストアから定期購読を解約し
     </array>
 
     <array name="arr_age">
+        <item>- 選択 -</item>
         <item>19 歳以下</item>
         <item>20 代</item>
         <item>30 代</item>

@@ -104,7 +104,13 @@
                 android:textSize="18sp"
                 android:paddingLeft="4dp"/>
 
-            <RadioGroup
+            <Spinner
+                android:id="@+id/gender_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/arr_gender"></Spinner>
+
+            <!--<RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -122,7 +128,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/gender_female"/>
-            </RadioGroup>
+            </RadioGroup>-->
 
             <CheckBox
                 android:id="@+id/chk_receive_notification"

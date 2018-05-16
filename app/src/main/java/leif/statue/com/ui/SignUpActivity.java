@@ -67,17 +67,19 @@ public class SignUpActivity extends AppCompatActivity {
     Spinner prefectureSpinner;
     @BindView(R.id.age_spinner)
     Spinner ageSpinner;
-    @BindView(R.id.radio_gender_male)
+    @BindView(R.id.gender_spinner)
+    Spinner genderSpinner;
+    /*@BindView(R.id.radio_gender_male)
     RadioButton radioMale;
     @BindView(R.id.radio_gender_female)
-    RadioButton radioFemale;
+    RadioButton radioFemale;*/
 
     private String mailAddress;
     private String password;
     private String language = "ja";
-    private int prefecture = 1;
-    private int age = 1;
-    private int gender = 1;
+    private int prefecture = 0;
+    private int age = 0;
+    private int gender = 0;
     private int isNotice = 1;
     private int plan = 1;
     private int selLanguage = 0;
@@ -152,7 +154,7 @@ public class SignUpActivity extends AppCompatActivity {
         prefectureSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                prefecture = i + 1;
+                prefecture = i;
             }
 
             @Override
@@ -164,7 +166,19 @@ public class SignUpActivity extends AppCompatActivity {
         ageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                age = i + 1;
+                age = i;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        genderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                gender = i;
             }
 
             @Override
@@ -200,7 +214,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-        radioMale.setOnClickListener(new View.OnClickListener() {
+        /*radioMale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 gender = 1;
@@ -212,7 +226,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View view) {
                 gender = 2;
             }
-        });
+        });*/
 
         if(!BillingProcessor.isIabServiceAvailable(this)) {
             Log.v("STAW", "In-app billing service is unavailable, please upgrade Android Market/Play to version >= 3.9.16");

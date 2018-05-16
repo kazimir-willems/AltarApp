@@ -53,18 +53,20 @@ public class EditProfileActivity extends AppCompatActivity {
     Spinner prefectureSpinner;
     @BindView(R.id.age_spinner)
     Spinner ageSpinner;
-    @BindView(R.id.radio_gender_male)
+    @BindView(R.id.gender_spinner)
+    Spinner genderSpinner;
+    /*@BindView(R.id.radio_gender_male)
     RadioButton radioMale;
     @BindView(R.id.radio_gender_female)
-    RadioButton radioFemale;
+    RadioButton radioFemale;*/
 
     private String mailAddress;
     private String password;
     private String oldPassword;
     private String language = "ja";
-    private int prefecture = 1;
-    private int age = 1;
-    private int gender = 1;
+    private int prefecture = 0;
+    private int age = 0;
+    private int gender = 0;
     private int isNotice = 1;
     private int selLanguage = 0;
 
@@ -84,17 +86,18 @@ public class EditProfileActivity extends AppCompatActivity {
         oldPassword = SharedPrefManager.getInstance(this).getPassword();
         edtPassword.setText(oldPassword);
 
-        prefectureSpinner.setSelection(prefecture - 1);
-        ageSpinner.setSelection(age - 1);
+        prefectureSpinner.setSelection(prefecture);
+        ageSpinner.setSelection(age);
+        genderSpinner.setSelection(gender);
 
-        switch(gender) {
+        /*switch(gender) {
             case 1:
                 radioMale.setChecked(true);
                 break;
             case 2:
                 radioFemale.setChecked(true);
                 break;
-        }
+        }*/
 
         switch(isNotice) {
             case 1:
@@ -144,7 +147,7 @@ public class EditProfileActivity extends AppCompatActivity {
         prefectureSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                prefecture = i + 1;
+                prefecture = i;
             }
 
             @Override
@@ -156,7 +159,19 @@ public class EditProfileActivity extends AppCompatActivity {
         ageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                age = i + 1;
+                age = i;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        genderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                gender = i;
             }
 
             @Override
@@ -176,7 +191,7 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
-        radioMale.setOnClickListener(new View.OnClickListener() {
+        /*radioMale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 gender = 1;
@@ -188,7 +203,7 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 gender = 2;
             }
-        });
+        });*/
     }
 
     @Override
