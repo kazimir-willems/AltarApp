@@ -222,6 +222,7 @@ public class ConfirmActivity extends AppCompatActivity {
                         finish();
                     }
                 })
+                .setCancelable(false)
                 .show();
     }
 
@@ -255,14 +256,26 @@ public class ConfirmActivity extends AppCompatActivity {
                 SharedPrefManager.getInstance(ConfirmActivity.this).saveHonjou(strHonzon);
                 SharedPrefManager.getInstance(ConfirmActivity.this).saveCompleteHonzon(strCompleteHonzon);
 
-                if(bModify) {
-                    showNotificationDialog();
-                } else {
+                if(bUpdatedHonzon) {
+                    SharedPrefManager.getInstance(ConfirmActivity.this).saveHonzonUpdate(false);
+
                     Intent intent = new Intent(ConfirmActivity.this, MainActivity.class);
 
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
                     startActivity(intent);
+                } else {
+                    if (bModify) {
+                        SharedPrefManager.getInstance(ConfirmActivity.this).saveHonzonUpdate(true);
+
+                        showNotificationDialog();
+                    } else {
+                        Intent intent = new Intent(ConfirmActivity.this, MainActivity.class);
+
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                        startActivity(intent);
+                    }
                 }
             } else {
                 showErrorMessage(responseVo.error_msg);

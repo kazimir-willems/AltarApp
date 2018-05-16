@@ -16,6 +16,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 public class AltarApplication extends Application {
     private static AltarApplication instance;
     public static int userId;
+    public static boolean isRunning = false;
 
     @Override
     protected void attachBaseContext(Context context) {

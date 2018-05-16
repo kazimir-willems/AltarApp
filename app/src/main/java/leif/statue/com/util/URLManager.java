@@ -81,4 +81,8 @@ public class URLManager {
     public static String getUpdatedHonzonURL() {
         return HTTP_SERVER + HTTP_API_HEADER + "gethonzon?";
     }
+
+    public static String getCheckHonzonUpdatedURL() {
+        return HTTP_SERVER + HTTP_API_HEADER + "checkupdhonzon?";
+    }
 }

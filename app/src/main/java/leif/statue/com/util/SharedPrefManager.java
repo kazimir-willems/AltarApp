@@ -23,6 +23,8 @@ public class SharedPrefManager {
     private static final String TAG_COMPLETE_HONZON = "complete_honzon";
     private static final String TAG_MUSIC_LEVEL = "music_level";
     private static final String TAG_PLAN = "plan";
+    private static final String TAG_HONZON_UPDATE_FLAG = "honzon_update_flag";
+    private static final String TAG_LOGIN_TIME = "login_time";
 
     private static SharedPrefManager mInstance;
     private static Context mCtx;
@@ -50,7 +52,7 @@ public class SharedPrefManager {
     //this method will fetch the device token from shared preferences
     public String getLanguage(){
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        return  sharedPreferences.getString(TAG_LANGUAGE, "en");
+        return  sharedPreferences.getString(TAG_LANGUAGE, "ja");
     }
 
     public boolean saveFirstLogin(boolean bFirstLogin){
@@ -289,5 +291,33 @@ public class SharedPrefManager {
     public int getPlan(){
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return  sharedPreferences.getInt(TAG_PLAN, 1);
+    }
+
+    public boolean saveHonzonUpdate(boolean value){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(TAG_HONZON_UPDATE_FLAG, value);
+        editor.apply();
+        return true;
+    }
+
+    //this method will fetch the device token from shared preferences
+    public boolean getHonzonUpdate(){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return  sharedPreferences.getBoolean(TAG_HONZON_UPDATE_FLAG, false);
+    }
+
+    public boolean saveLoginTime(long value){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putLong(TAG_LOGIN_TIME, value);
+        editor.apply();
+        return true;
+    }
+
+    //this method will fetch the device token from shared preferences
+    public long getLoginTime(){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return  sharedPreferences.getLong(TAG_LOGIN_TIME, 0);
     }
 }

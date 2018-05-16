@@ -72,13 +72,15 @@
     <string name="input_mail_password">Please input email address and password.</string>
     <string name="msg_cancel_membership">Cancel the Membership ? </string>
     <string name="msg_adjust_honzon">Please adjust the position of your Gohonzon.</string>
-    <string name="msg_notification_comment">After the image is revised, the notification will be sent to you, so please turn on the notification settings of the application.</string>
+    <string name="msg_notification_comment">Keep the notification configuration of the application “ON” as a notice will be sent to you after the completion of re-correction.</string>
     <string name="msg_save_history">If you want to inherit the count number by model change etc, you can take over by logging in from another model after pressing the registration button below.</string>
     <string name="btn_back_main">Main Page</string>
     <string name="count_format">%07ds</string>
-    <string name="correction_info">We provide the correction for your picture we have received with \120. Trimming (cutting off) and adjustment for light level will be provided. By the next business day, we will switch it to the corrected one (the re-correction will be possible just for once).</string>
+    <string name="correction_info">We provide the correction for your picture we have received with \120. Trimming (cutting off) and adjustment for light level will be provided. By the next business day, we will send the corrected one to you.\n*The re-correction will be possible just for once.\n*Make the request for re-correction through the inquiry form.</string>
     <string name="take_photo_comment">Take the picture of Gohonzon with the camera of your smartphone, adjust it with automatic trimming function and then press cut-off button.</string>
     <string name="send_contact_succeess">Thank you for your inquiry.</string>
+    <string name="msg_login_expire">Your login has expired. Please log in again.</string>
+    <string name="msg_recharge">To continue to use this, please subscribe.</string>
     <string name="content_about_payment">お使いの端末により変更・解約方法が異な
 ります。解約後も残りの期間は引き続きご
 利用いただけます。\n\n\n

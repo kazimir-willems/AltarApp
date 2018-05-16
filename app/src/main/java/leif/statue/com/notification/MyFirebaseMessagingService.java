@@ -15,6 +15,7 @@ import leif.statue.com.R;
 import leif.statue.com.ui.ConfirmActivity;
 import leif.statue.com.ui.MainActivity;
 import leif.statue.com.util.MyNotificationManager;
+import leif.statue.com.util.SharedPrefManager;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
@@ -22,6 +23,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
+
+        SharedPrefManager.getInstance(this).saveHonzonUpdate(true);
+
         if (remoteMessage.getData().size() > 0) {
             Log.e(TAG, "Data Payload: " + remoteMessage.getData().toString());
 

@@ -63,8 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitCenter"
-            android:background="@color/colorWhite"
-            android:src="@mipmap/img_preview" />
+            android:background="@color/colorWhite" />
 
         <ImageView
             android:id="@+id/iv_honjou"

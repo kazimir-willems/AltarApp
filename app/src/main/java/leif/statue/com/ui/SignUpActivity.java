@@ -29,6 +29,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -303,6 +304,7 @@ public class SignUpActivity extends AppCompatActivity {
                 SharedPrefManager.getInstance(this).saveUserId(responseVo.user_id);
 
                 SharedPrefManager.getInstance(this).savePassword(password);
+                SharedPrefManager.getInstance(this).saveLoginTime(new Date().getTime());
 
                 Intent intent = new Intent(SignUpActivity.this, SelectAltarActivity.class);
 

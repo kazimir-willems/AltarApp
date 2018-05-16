@@ -6,7 +6,7 @@ android {
         applicationId "leif.statue.com"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 2
+        versionCode 4
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
@@ -48,8 +48,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation project(':library')
 }
-
-
-
 
 apply plugin: 'com.google.gms.google-services'

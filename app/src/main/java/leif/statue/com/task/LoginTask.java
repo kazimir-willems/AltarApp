@@ -14,6 +14,9 @@ public class LoginTask extends AsyncTask<String, Void, LoginResponseVo> {
     private String password;
     private String lang;
     private String token;
+    private String isCancel;
+    private String expireDate;
+    private String plan;
 
     @Override
     protected void onPreExecute() {
@@ -27,8 +30,11 @@ public class LoginTask extends AsyncTask<String, Void, LoginResponseVo> {
         password = params[1];
         lang = params[2];
         token = params[3];
+        isCancel = params[4];
+        expireDate = params[5];
+        plan = params[6];
         try {
-            final LoginResponseVo responseVo = simpleProxy.run(mailAddress, password, lang, token);
+            final LoginResponseVo responseVo = simpleProxy.run(mailAddress, password, lang, token, isCancel, expireDate, plan);
 
             return responseVo;
         } catch (Exception e) {

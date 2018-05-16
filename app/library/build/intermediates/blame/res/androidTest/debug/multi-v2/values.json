@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "Z:\\KazimirGIT\\Altar\\app\\library\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
+            "outputFile": "Z:\\Github\\AltarApp\\app\\library\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Finn\\.gradle\\caches\\transforms-1\\files-1.1\\rules-0.5.aar\\82820aef5230577c49f7abf0a6dd1d3e\\res\\values\\values.xml",
+                    "source": "C:\\Users\\Leif\\.gradle\\caches\\transforms-1\\files-1.1\\rules-0.5.aar\\16de549cac784fe6d1532bd7a00412e1\\res\\values\\values.xml",
                     "from": {
                         "startLines": "4",
                         "startColumns": "4",

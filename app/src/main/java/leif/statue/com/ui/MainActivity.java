@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
@@ -13,6 +14,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +29,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
+import java.util.Date;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,11 +38,14 @@ import butterknife.OnClick;
 import leif.statue.com.R;
 import leif.statue.com.db.HistoryDB;
 import leif.statue.com.event.CancelMembershipEvent;
+import leif.statue.com.event.CheckUpdatedHonzonEvent;
 import leif.statue.com.model.CountsItem;
 import leif.statue.com.task.CancelMembershipTask;
+import leif.statue.com.task.CheckUpdatedHonzonTask;
 import leif.statue.com.util.DateUtil;
 import leif.statue.com.util.SharedPrefManager;
 import leif.statue.com.vo.CancelMembershipResponseVo;
+import leif.statue.com.vo.CheckUpdatedHonzonResponseVo;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -243,8 +250,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-
         EventBus.getDefault().register(this);
+
+        Log.v("MainActivity", "Resumed");
     }
 
     @Override
@@ -272,6 +280,29 @@ public class MainActivity extends AppCompatActivity {
             }
         } else {
 
+        }
+    }
+
+    @Subscribe
+    public void onCheckUpdatedHonzonEvent(CheckUpdatedHonzonEvent event) {
+        hideProgressDialog();
+        CheckUpdatedHonzonResponseVo responseVo = event.getResponse();
+        if (responseVo != null) {
+            if(responseVo.success == 1) {
+                if(responseVo.is_update == 1) {
+                    Intent intent = new Intent(MainActivity.this, ConfirmActivity.class);
+
+                    intent.putExtra("update_honzon", true);
+
+                    startActivity(intent);
+                } else {
+                    startCount();
+                }
+            } else {
+                startCount();
+            }
+        } else {
+            startCount();
         }
     }
 
@@ -547,13 +578,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case R.id.menu_logout:
-                        SharedPrefManager.getInstance(MainActivity.this).saveLogin(false);
-                        intent = new Intent(MainActivity.this, LoginActivity.class);
-
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
-                        startActivity(intent);
-                        finish();
+                        startLogout(false);
                         break;
                     case R.id.menu_cancel_membership:
                         AlertDialog.Builder builder;
@@ -584,6 +609,18 @@ public class MainActivity extends AppCompatActivity {
         popup.show();//showing popup menu
     }
 
+    private void startLogout(boolean expire) {
+        SharedPrefManager.getInstance(MainActivity.this).saveLogin(false);
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.putExtra("expire_flag", expire);
+        intent.putExtra("logout_flag", true);
+
+        startActivity(intent);
+        finish();
+    }
+
     @OnClick(R.id.btn_bell)
     void onClickBell() {
         playAudio();
@@ -591,15 +628,38 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_start)
     void onClickStart() {
+        if (!bStart) {
+            if(SharedPrefManager.getInstance(this).getHonzonUpdate()) {
+                checkUpdatedHonzon();
+            } else {
+                startCount();
+            }
+        } else {
+            startCount();
+        }
+    }
+
+    private void checkUpdatedHonzon() {
+        progressDialog.show();
+
+        CheckUpdatedHonzonTask task = new CheckUpdatedHonzonTask();
+        task.execute(String.valueOf(SharedPrefManager.getInstance(this).getUserId()), SharedPrefManager.getInstance(this).getLanguage());
+    }
+
+    private void startCount() {
         bStart = !bStart;
-        if(bStart)
+        if (bStart)
             bConstant = true;
         else
             bConstant = false;
 
-        if(!bStart) {
+        if (!bStart) {
             btnStart.setText(getResources().getString(R.string.btn_start));
         } else {
+            if(DateUtil.getDiffTime(SharedPrefManager.getInstance(this).getLoginTime(), new Date().getTime()) / 60 / 24 >= 7) {
+                startLogout(true);
+                return;
+            }
             btnStart.setText(getResources().getString(R.string.btn_stop));
             countHandler.postDelayed(countRunnable, 200 + 160 * (10 - curSpeed) + 200);
         }

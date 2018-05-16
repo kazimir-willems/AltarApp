@@ -1,6 +1,6 @@
 /*
  * This file is auto-generated.  DO NOT MODIFY.
- * Original file: Z:\\KazimirGIT\\Altar\\app\\library\\src\\main\\aidl\\com\\android\\vending\\billing\\IInAppBillingService.aidl
+ * Original file: Z:\\Github\\AltarApp\\app\\library\\src\\main\\aidl\\com\\android\\vending\\billing\\IInAppBillingService.aidl
  */
 package com.android.vending.billing;
 /**

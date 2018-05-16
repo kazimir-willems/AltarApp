@@ -16,8 +16,8 @@ import okhttp3.RequestBody;
 
 public class LoginProxy extends BaseProxy {
 
-    public LoginResponseVo run(String mailAddress, String password, String lang, String token) throws IOException {
-        String params = "user_id=" + mailAddress + "&password=" + password + "&lang=" + lang + "&token=" + token;
+    public LoginResponseVo run(String mailAddress, String password, String lang, String token, String isCancel, String expireDate, String plan) throws IOException {
+        String params = "user_id=" + mailAddress + "&password=" + password + "&lang=" + lang + "&token=" + token + "&is_cancel=" + isCancel + "&expire_date=" + expireDate + "&plan=" + plan;
 
         String contentString = getPlain(URLManager.getLoginURL(), params);
 

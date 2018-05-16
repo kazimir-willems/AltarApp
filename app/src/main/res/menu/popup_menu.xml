@@ -1,7 +1,5 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto"
-      xmlns:tools="http://schemas.android.com/tools"
-      tools:context="yalantis.com.sidemenu.MainActivity">
+      xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/menu_edit_profile"
@@ -65,5 +63,6 @@
         android:id="@+id/menu_cancel_membership"
         android:title="@string/menu_cancel_membership"
         android:orderInCategory="100"
+        android:visible="false"
         app:showAsAction="never"/>
 </menu>
