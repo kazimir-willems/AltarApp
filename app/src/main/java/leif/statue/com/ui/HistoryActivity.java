@@ -1,7 +1,9 @@
 package leif.statue.com.ui;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -43,6 +45,8 @@ public class HistoryActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
+    private String data;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +84,27 @@ public class HistoryActivity extends AppCompatActivity {
         SaveHistoryResponseVo responseVo = event.getResponse();
         if (responseVo != null) {
             if(responseVo.success == 1) {
-                Toast.makeText(HistoryActivity.this, R.string.save_profile_successfully, Toast.LENGTH_SHORT).show();
+                if(responseVo.overflow == 0) {
+                    Toast.makeText(HistoryActivity.this, R.string.save_profile_successfully, Toast.LENGTH_SHORT).show();
+                } else if(responseVo.overflow == 1) {
+                    AlertDialog.Builder builder;
+                    builder = new AlertDialog.Builder(HistoryActivity.this);
+
+                    builder.setMessage(R.string.msg_overwrite)
+                            .setPositiveButton(R.string.btn_ok, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    startSaveHistory(1);
+                                }
+                            })
+                            .setNegativeButton(R.string.btn_no, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int i) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .show();
+                }
+
             } else {
                 showErrorMessage(responseVo.error_msg);
             }
@@ -110,17 +134,17 @@ public class HistoryActivity extends AppCompatActivity {
             ex.printStackTrace();
         }
 
-        String data = jsonArray.toString();
+        data = jsonArray.toString();
         Log.v("History Data", data);
 
-        startSaveHistory(data);
+        startSaveHistory(0);
     }
 
-    private void startSaveHistory(String data) {
+    private void startSaveHistory(int overflow) {
         progressDialog.show();
 
         SaveHistoryTask task = new SaveHistoryTask();
-        task.execute(String.valueOf(SharedPrefManager.getInstance(this).getUserId()), SharedPrefManager.getInstance(this).getLanguage(), data);
+        task.execute(String.valueOf(SharedPrefManager.getInstance(this).getUserId()), SharedPrefManager.getInstance(this).getLanguage(), data, String.valueOf(overflow));
     }
 
     private void refreshItems() {

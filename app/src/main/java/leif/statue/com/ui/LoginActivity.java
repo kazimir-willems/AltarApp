@@ -273,7 +273,7 @@ public class LoginActivity extends AppCompatActivity {
                 SharedPrefManager.getInstance(this).saveFirstLogin(false);
 
                 HistoryDB db = new HistoryDB(LoginActivity.this);
-                int count = db.fetchItemByDate(DateUtil.getCurDate()).get(0).getCounts();
+                int count = db.getTotalCount();
 
                 if(count == 0) {
                     db.removeAllDatas();

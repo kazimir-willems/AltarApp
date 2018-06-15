@@ -5,4 +5,5 @@ package leif.statue.com.vo;
  */
 
 public class SaveHistoryResponseVo extends BaseResponseVo{
+    public int overflow;
 }

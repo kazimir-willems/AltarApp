@@ -235,7 +235,8 @@ public class MainActivity extends AppCompatActivity {
         String formatted = String.format(getResources().getString(R.string.count_format), count);
 
         tvDate.setText(DateUtil.getCurDate());
-        tvCount.setText(formatted);
+        /*tvCount.setText(formatted);*/
+        showCount();
 
 //        ImageLoader.getInstance().displayImage(SharedPrefManager.getInstance(this).getBuddhistImage(), ivAltar);
         Bitmap bitmap = StringToBitMap(SharedPrefManager.getInstance(this).getCompleteHonzon());
@@ -694,9 +695,10 @@ public class MainActivity extends AppCompatActivity {
             CountsItem item = new CountsItem(curDate, count);
             historyDB.updateItem(item);
 
-            String formatted = String.format(getResources().getString(R.string.count_format), count);
+            /*String formatted = String.format(getResources().getString(R.string.count_format), count);
 
-            tvCount.setText(formatted);
+            tvCount.setText(formatted);*/
+            showCount();
         }
     }
 
@@ -708,9 +710,10 @@ public class MainActivity extends AppCompatActivity {
         CountsItem item = new CountsItem(curDate, count);
         historyDB.updateItem(item);
 
-        String formatted = String.format(getResources().getString(R.string.count_format), count);
+        /*String formatted = String.format(getResources().getString(R.string.count_format), count);
 
-        tvCount.setText(formatted);
+        tvCount.setText(formatted);*/
+        showCount();
     }
 
     private void decOne() {
@@ -721,9 +724,10 @@ public class MainActivity extends AppCompatActivity {
         CountsItem item = new CountsItem(curDate, count);
         historyDB.updateItem(item);
 
-        String formatted = String.format(getResources().getString(R.string.count_format), count);
+        /*String formatted = String.format(getResources().getString(R.string.count_format), count);
 
-        tvCount.setText(formatted);
+        tvCount.setText(formatted);*/
+        showCount();
     }
 
     private void incTen(){
@@ -734,9 +738,10 @@ public class MainActivity extends AppCompatActivity {
         CountsItem item = new CountsItem(curDate, count);
         historyDB.updateItem(item);
 
-        String formatted = String.format(getResources().getString(R.string.count_format), count);
+        /*String formatted = String.format(getResources().getString(R.string.count_format), count);
 
-        tvCount.setText(formatted);
+        tvCount.setText(formatted);*/
+        showCount();
     }
 
     private void decTen() {
@@ -745,6 +750,15 @@ public class MainActivity extends AppCompatActivity {
             count = 0;
         CountsItem item = new CountsItem(curDate, count);
         historyDB.updateItem(item);
+
+        /*String formatted = String.format(getResources().getString(R.string.count_format), count);
+
+        tvCount.setText(formatted);*/
+        showCount();
+    }
+
+    private void showCount() {
+        int count = historyDB.getTotalCount();
 
         String formatted = String.format(getResources().getString(R.string.count_format), count);
 

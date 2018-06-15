@@ -16,6 +16,7 @@ public class SaveHistoryTask extends AsyncTask<String, Void, SaveHistoryResponse
     private String userId;
     private String data;
     private String lang;
+    private String overflow;
 
     @Override
     protected void onPreExecute() {
@@ -28,9 +29,10 @@ public class SaveHistoryTask extends AsyncTask<String, Void, SaveHistoryResponse
         userId = params[0];
         lang = params[1];
         data = params[2];
+        overflow = params[3];
 
         try {
-            final SaveHistoryResponseVo responseVo = simpleProxy.run(userId, lang, data);
+            final SaveHistoryResponseVo responseVo = simpleProxy.run(userId, lang, data, overflow);
 
             return responseVo;
         } catch (Exception e) {

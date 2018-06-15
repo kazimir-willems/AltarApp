@@ -14,10 +14,11 @@ import okhttp3.RequestBody;
 
 public class SaveHistoryProxy extends BaseProxy {
 
-    public SaveHistoryResponseVo run(String userId, String lang, String data) throws IOException {
+    public SaveHistoryResponseVo run(String userId, String lang, String data, String overflow) throws IOException {
         FormBody.Builder formBuilder = new FormBody.Builder();
         formBuilder.add("user_id", userId);
         formBuilder.add("lang", lang);
+        formBuilder.add("overflow", overflow);
         formBuilder.add("data", data);
 
         RequestBody formBody = formBuilder.build();

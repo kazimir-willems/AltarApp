@@ -94,6 +94,29 @@ public class HistoryDB extends DBHelper {
         return ret;
     }
 
+    public int getTotalCount() {
+        int count = 0;
+        try {
+
+            synchronized (DB_LOCK) {
+                SQLiteDatabase db = getReadableDatabase();
+
+                Cursor cur = db.rawQuery("SELECT SUM(count) FROM tbl_history", null);
+
+                if(cur.moveToFirst())
+                {
+                    count = cur.getInt(0);
+                }
+
+                db.close();
+            }
+        } catch (IllegalStateException ex) {
+            ex.printStackTrace();
+        }
+
+        return count;
+    }
+
     public long updateItem(CountsItem bean) {
         long ret = -1;
         try {

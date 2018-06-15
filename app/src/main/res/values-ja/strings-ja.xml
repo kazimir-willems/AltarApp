@@ -81,6 +81,7 @@
     <string name="send_contact_succeess">お問い合わせいただき、誠にありがとうございました。</string>
     <string name="msg_login_expire">ログインの有効期限が切れました。再度ログインしてください。</string>
     <string name="msg_recharge">引き続きご利用になるには、定期購読をお願いいたします。</string>
+    <string name="msg_overwrite">Overwrite?</string>
     <string name="content_about_payment">お使いの端末により変更・解約方法が異な
 ります。解約後も残りの期間は引き続きご
 利用いただけます。\n\n\n
